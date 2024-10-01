@@ -81,16 +81,16 @@ input {
     <div id="main">
         <h2>Property Bot допоможе вам з продажем та орендою будь-якої нерухомості в місті Дніпро та Дніпропетровській області.</h2>
           <img src="static/img/ve_logo.jpg" width="70">
-          <button id="sell">Продати/Здати</button>
+          <button id="sale_rent">Продати/Здати</button>
     </div>
     <form id="form">
-    <input type="text" placeholder="Адреса">
+    <input type="text" placeholder="Адреса (введіть спочатку назву вулиці)" id="adress">
     <input type="text" placeholder="Ім'я" id="user_name">
     <input type="text" placeholder="Email" id="user_email">
     <input type="text" placeholder="Телефон" id="user_phone">
     <select id="transaction_type">
-        <option value="sale">Продам</option>
-        <option value="rent">Здам</option>
+        <option value="Продаж">Продам</option>
+        <option value="Оренда">Здам</option>
     </select>
     <div id="error"></div>
     <button id="order">Опублікувати оголошення</button>
@@ -98,8 +98,8 @@ input {
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
-        let sell = document.getElementById("sell");
-        let order = document.getElementById("order");
+        let sale_rent = document.getElementById("sale_rent");
+        let send = document.getElementById("send");
         tg.expand();
 
         sell.addEventListener("click", () => {
