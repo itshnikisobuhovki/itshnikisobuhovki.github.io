@@ -81,44 +81,38 @@ input {
     <div id="main">
         <h2>Property Bot допоможе вам з продажем та орендою будь-якої нерухомості в місті Дніпро та Дніпропетровській області.</h2>
           <img src="static/img/ve_logo.jpg" width="70">
-          <button id="sale_rent">Продати/Здати</button>
+          <button id="sell">Продати/Здати</button>
     </div>
     <form id="form">
-    <input type="text" placeholder="Адреса (введіть спочатку назву вулиці)" id="property_adress">
     <input type="text" placeholder="Ім'я" id="user_name">
     <input type="text" placeholder="Email" id="user_email">
     <input type="text" placeholder="Телефон" id="user_phone">
     <select id="transaction_type">
-        <option value="Продаж">Продам</option>
-        <option value="Оренда">Здам</option>
+        <option value="sale">Продам</option>
+        <option value="rent">Здам</option>
     </select>
     <div id="error"></div>
-    <button id="send">Опублікувати оголошення</button>
+    <button id="order">Опублікувати оголошення</button>
 </form>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
-        let sale_rent = document.getElementById("sale_rent");
-        let send = document.getElementById("send");
+        let sell = document.getElementById("sell");
+        let order = document.getElementById("order");
         tg.expand();
 
         sell.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
             document.getElementById("form").style.display = "block";
-            // document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
         });
 
         order.addEventListener("click", () => {
             document.getElementById("error").innerText = '';
-            let adress = document.getElementById("property_adress").value;
             let name = document.getElementById("user_name").value;
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
             let transactionType = document.getElementById("transaction_type").value;
-            if(adress.length < 5) {
-                document.getElementById("error").innerText = 'Помилка у адресі';
-                return;
-            }
             if(name.length < 5) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
@@ -133,7 +127,6 @@ input {
             }
 
             let data = {
-        adress: adress,        
         name: name,
         email: email,
         phone: phone,
