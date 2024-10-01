@@ -108,6 +108,7 @@ input {
             let name = document.getElementById("user_name").value;
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
+            let transactionType = document.getElementById("transaction_type").value;
             if(name.length < 5) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
@@ -122,15 +123,16 @@ input {
             }
 
             let data = {
-                name: name,
-                email: email,
-                phone: phone
-            }
+        name: name,
+        email: email,
+        phone: phone,
+        type_of_transaction: transactionType
+    }
 
-            tg.sendData(JSON.stringify(data));
+    tg.sendData(JSON.stringify(data));
 
-            tg.close();
-        });
+    tg.close();
+});
     </script>
 </body>
 </html>
