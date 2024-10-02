@@ -5,102 +5,100 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VE Estate Dnipro</title>
-<!--    <link rel="stylesheet" href="static/css/style.css">-->
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500@display=swap')
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500@display=swap')
 
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 200;
-    color: var(--tg-theme-text-color);
-    background: var(--tg-theme-bg-color);
-}
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-bg-color);
+        }
 
-#main h2 {
-        margin-top: 50px;
-        margin-bottom: 10px;
-    }
+        #main h2 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+        }
 
-img {
-        /* Ширина изображения устанавливается такой же, как и у заголовка */
-        width: 80%; /* Поменяйте значение, если хотите другую пропорцию */
-        display: block; /* Центрирование изображения */
-        margin: 30px auto;
-    }
+        img {
+            width: 80%;
+            display: block;
+            margin: 30px auto;
+        }
 
-p {
-   width: 350px;
-    margin: 0 auto;
-}
+        p {
+            width: 350px;
+            margin: 0 auto;
+        }
 
-button {
-        border: 0;
-        border-radius: 5px;
-        margin-top: 50px;
-        height: 60px;
-        width: 200px;
-        font-size: 20px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 500ms ease;
-        color: var(--tg-theme-button-color);
-        background: var(--tg-theme-button-text-color);
-        display: block;  /* Устанавливаем кнопку как блочный элемент */
-        margin-left: auto;
-        margin-right: auto;  /* Центрирование кнопки */
-    }
+        button {
+            border: 0;
+            border-radius: 5px;
+            margin-top: 50px;
+            height: 60px;
+            width: 200px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: var(--tg-theme-button-color);
+            background: var(--tg-theme-button-text-color);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-button:hover {
-    background: var(--tg-theme-secondary-bg-color);
-}
+        button:hover {
+            background: var(--tg-theme-secondary-bg-color);
+        }
 
-#form {
-    display: none;
-    text-align: center;
-}
+        #form {
+            display: none;
+            text-align: center;
+        }
 
-
-input {
-    width: 90%;
-    outline: none;
-    margin: 10px 5%;
-    padding: 15px 10px;
-    font-size: 14px;
-    border: 2px solid silver;
-    border-radius: 5px;
-}
+        input {
+            width: 90%;
+            outline: none;
+            margin: 10px 5%;
+            padding: 15px 10px;
+            font-size: 14px;
+            border: 2px solid silver;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div id="main">
         <h2>Property Bot допоможе вам з продажем та орендою будь-якої нерухомості в місті Дніпро та Дніпропетровській області.</h2>
-          <img src="static/img/ve_logo.jpg" width="70">
-          <button id="sell">Продати/Здати</button>
+        <img src="static/img/ve_logo.jpg" width="70">
+        <button id="sell">Продати/Здати</button>
     </div>
     <form id="form">
-    <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
-    <input type="text" placeholder="Введіть ціну" id="user_price">
-    <input type="text" placeholder="Ім'я" id="user_name">
-    <input type="text" placeholder="Email" id="user_email">
-    <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
-    <select id="transaction_type">
-        <option value="#Продаж">Продам</option>
-        <option value="#Оренда">Здам</option>
-    </select>
-    <select id="currency_type">
-        <option value="гривень">Гривні</option>
-        <option value="доларів">Долари США</option>
-        <option value="євро">Євро</option>
-    </select>
-    <div id="error"></div>
-    <button id="order" type="button">Опублікувати оголошення</button>
-</form>
+        <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
+        <input type="text" placeholder="Введіть ціну" id="user_price">
+        <input type="text" placeholder="Ім'я" id="user_name">
+        <input type="text" placeholder="Email" id="user_email">
+        <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
+        <select id="transaction_type">
+            <option value="#Продаж">Продам</option>
+            <option value="#Оренда">Здам</option>
+        </select>
+        <select id="currency_type">
+            <option value="гривень">Гривні</option>
+            <option value="доларів">Долари США</option>
+            <option value="євро">Євро</option>
+        </select>
+        <div id="error"></div>
+        <button id="order" type="button">Опублікувати оголошення</button>
+    </form>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
@@ -108,51 +106,57 @@ input {
         let order = document.getElementById("order");
         tg.expand();
 
-    order.addEventListener("click", (event) => {
-    event.preventDefault();  // Останавливаем стандартное поведение формы
-    document.getElementById("error").innerText = '';
+        // Обработчик кнопки "Продати/Здати"
+        sell.addEventListener("click", () => {
+            document.getElementById("main").style.display = "none";
+            document.getElementById("form").style.display = "block";
+            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+        });
 
-    let adress = document.getElementById("user_adress").value;
-    let price = document.getElementById("user_price").value;
-    let name = document.getElementById("user_name").value;
-    let email = document.getElementById("user_email").value;
-    let phone = document.getElementById("user_phone").value;
-    let transactionType = document.getElementById("transaction_type").value;
-    let currencyType = document.getElementById("currency_type").value;
+        order.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.getElementById("error").innerText = '';
 
-    // Проверка поля цены на положительное число
-    if (isNaN(price) || Number(price) <= 0) {
-        document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
-        return;
-    }
+            let adress = document.getElementById("user_adress").value;
+            let price = document.getElementById("user_price").value;
+            let name = document.getElementById("user_name").value;
+            let email = document.getElementById("user_email").value;
+            let phone = document.getElementById("user_phone").value;
+            let transactionType = document.getElementById("transaction_type").value;
+            let currencyType = document.getElementById("currency_type").value;
 
-    if(name.length < 5) {
-        document.getElementById("error").innerText = 'Помилка в імені';
-        return;
-    }
-    if(email.length < 5) {
-        document.getElementById("error").innerText = 'Помилка в email';
-        return;
-    }
-    if(phone.length < 13) {
-        document.getElementById("error").innerText = 'Помилка у номері телефону';
-        return;
-    }
+            // Проверка поля цены на положительное число
+            if (isNaN(price) || Number(price) <= 0) {
+                document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+                return;
+            }
 
-    let data = {
-        adress: adress,
-        price: price,
-        name: name,
-        email: email,
-        phone: phone,
-        transaction_type: transactionType,
-        currency_type: currencyType
-    };
+            if(name.length < 5) {
+                document.getElementById("error").innerText = 'Помилка в імені';
+                return;
+            }
+            if(email.length < 5) {
+                document.getElementById("error").innerText = 'Помилка в email';
+                return;
+            }
+            if(phone.length < 13) {
+                document.getElementById("error").innerText = 'Помилка у номері телефону';
+                return;
+            }
 
-    tg.sendData(JSON.stringify(data));
-    tg.close();
-});
+            let data = {
+                adress: adress,
+                price: price,
+                name: name,
+                email: email,
+                phone: phone,
+                transaction_type: transactionType,
+                currency_type: currencyType
+            };
 
-</script>
+            tg.sendData(JSON.stringify(data));
+            tg.close();
+        });
+    </script>
 </body>
 </html>
