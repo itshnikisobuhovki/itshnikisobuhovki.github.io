@@ -123,8 +123,8 @@ input {
             let phone = document.getElementById("user_phone").value;
             let transactionType = document.getElementById("transaction_type").value;
             let currencyType = document.getElementById("currency_type").value;
-            if(price.length < 1) {
-                document.getElementById("error").innerText = 'Помилка, ціна має бути числом';
+            if (isNaN(price) || Number(price) <= 0) {
+                document.getElementById("error").innerText = 'Помилка, ціна має бути числом яке є більше 0';
                 return;
             }
             if(name.length < 5) {
