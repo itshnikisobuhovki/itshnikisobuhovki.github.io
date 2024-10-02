@@ -99,7 +99,7 @@ input {
         <option value="євро">Євро</option>
     </select>
     <div id="error"></div>
-    <button id="order">Опублікувати оголошення</button>
+    <button id="order" type="button">Опублікувати оголошення</button>
 </form>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
@@ -108,7 +108,8 @@ input {
         let order = document.getElementById("order");
         tg.expand();
 
-        order.addEventListener("click", () => {
+    order.addEventListener("click", (event) => {
+    event.preventDefault();  // Останавливаем стандартное поведение формы
     document.getElementById("error").innerText = '';
 
     let adress = document.getElementById("user_adress").value;
@@ -151,6 +152,7 @@ input {
     tg.sendData(JSON.stringify(data));
     tg.close();
 });
-    </script>
+
+</script>
 </body>
 </html>
