@@ -85,6 +85,7 @@ input {
     </div>
     <form id="form">
     <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
+    <input type="text" placeholder="Введіть ціну" id="user_price">
     <input type="text" placeholder="Ім'я" id="user_name">
     <input type="text" placeholder="Email" id="user_email">
     <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
@@ -116,11 +117,16 @@ input {
         order.addEventListener("click", () => {
             document.getElementById("error").innerText = '';
             let adress = document.getElementById("user_adress").value;
+            let price = document.getElementById("user_price").value;
             let name = document.getElementById("user_name").value;
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
             let transactionType = document.getElementById("transaction_type").value;
             let currencyType = document.getElementById("currency_type").value;
+            if(price.length < 1) {
+                document.getElementById("error").innerText = 'Помилка, ціна має бути числом';
+                return;
+            }
             if(name.length < 5) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
@@ -136,6 +142,7 @@ input {
 
             let data = {
         adress: adress,
+        price: price        
         name: name,
         email: email,
         phone: phone,
