@@ -92,6 +92,11 @@ input {
         <option value="#Продаж">Продам</option>
         <option value="#Оренда">Здам</option>
     </select>
+    <select id="currency_type">
+        <option value="гривень">Гривні</option>
+        <option value="долларів">Доллари США</option>
+        <option value="євро">Євро</option>
+    </select>
     <div id="error"></div>
     <button id="order">Опублікувати оголошення</button>
 </form>
@@ -115,6 +120,7 @@ input {
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
             let transactionType = document.getElementById("transaction_type").value;
+            let currencyType = document.getElementById("currency_type").value;
             if(name.length < 5) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
@@ -133,7 +139,8 @@ input {
         name: name,
         email: email,
         phone: phone,
-        type_of_transaction: transactionType
+        transaction_type: transactionType,
+        currency_type: currencyType
     }
 
     tg.sendData(JSON.stringify(data));
