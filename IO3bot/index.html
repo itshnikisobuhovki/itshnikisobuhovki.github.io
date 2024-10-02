@@ -84,9 +84,10 @@ input {
           <button id="sell">Продати/Здати</button>
     </div>
     <form id="form">
+    <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
     <input type="text" placeholder="Ім'я" id="user_name">
     <input type="text" placeholder="Email" id="user_email">
-    <input type="text" placeholder="Телефон" id="user_phone">
+    <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
     <select id="transaction_type">
         <option value="#Продаж">Продам</option>
         <option value="#Оренда">Здам</option>
@@ -109,6 +110,7 @@ input {
 
         order.addEventListener("click", () => {
             document.getElementById("error").innerText = '';
+            let adress = document.getElementById("user_adress").value;
             let name = document.getElementById("user_name").value;
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
@@ -121,12 +123,13 @@ input {
                 document.getElementById("error").innerText = 'Помилка в email';
                 return;
             }
-            if(phone.length < 5) {
+            if(phone.length < 13) {
                 document.getElementById("error").innerText = 'Помилка у номері телефону';
                 return;
             }
 
             let data = {
+        adress: adress,
         name: name,
         email: email,
         phone: phone,
