@@ -83,6 +83,7 @@
     <form id="form">
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
         <input type="text" placeholder="Введіть ціну" id="user_price">
+        <input type="text" placeholder="Вкажіть комісію у процентах від ціни об'єкту, якщо ви не посередник вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
         <input type="text" placeholder="Email" id="user_email">
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
@@ -119,6 +120,7 @@
 
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
+            let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
@@ -147,6 +149,7 @@
             let data = {
                 adress: adress,
                 price: price,
+                commission: commission,
                 name: name,
                 email: email,
                 phone: phone,
