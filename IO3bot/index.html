@@ -132,7 +132,17 @@
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
                 return;
             }
+            // Проверка поля commission на целое число от 0 до 200
+            let commissionValue = Number(commission);
+            if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
+                document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
+                return;
+            }
 
+            // Если commission = 0, передаем как строку "без комісії"
+            if (commissionValue === 0) {
+                commission = "без комісії";
+            }
             if(name.length < 5) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
