@@ -108,50 +108,47 @@ input {
         let order = document.getElementById("order");
         tg.expand();
 
-        sell.addEventListener("click", () => {
-            document.getElementById("main").style.display = "none";
-            document.getElementById("form").style.display = "block";
-            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
-        });
-
         order.addEventListener("click", () => {
-            document.getElementById("error").innerText = '';
-            let adress = document.getElementById("user_adress").value;
-            let price = document.getElementById("user_price").value;
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
-            let transactionType = document.getElementById("transaction_type").value;
-            let currencyType = document.getElementById("currency_type").value;
-            if (isNaN(price) || Number(price) <= 0) {
-                document.getElementById("error").innerText = 'Помилка, ціна має бути числом яке є більше 0';
-                return;
-            }
-            if(name.length < 5) {
-                document.getElementById("error").innerText = 'Помилка в імені';
-                return;
-            }
-            if(email.length < 5) {
-                document.getElementById("error").innerText = 'Помилка в email';
-                return;
-            }
-            if(phone.length < 13) {
-                document.getElementById("error").innerText = 'Помилка у номері телефону';
-                return;
-            }
+    document.getElementById("error").innerText = '';
 
-            let data = {
+    let adress = document.getElementById("user_adress").value;
+    let price = document.getElementById("user_price").value;
+    let name = document.getElementById("user_name").value;
+    let email = document.getElementById("user_email").value;
+    let phone = document.getElementById("user_phone").value;
+    let transactionType = document.getElementById("transaction_type").value;
+    let currencyType = document.getElementById("currency_type").value;
+
+    // Проверка поля цены на положительное число
+    if (isNaN(price) || Number(price) <= 0) {
+        document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+        return;
+    }
+
+    if(name.length < 5) {
+        document.getElementById("error").innerText = 'Помилка в імені';
+        return;
+    }
+    if(email.length < 5) {
+        document.getElementById("error").innerText = 'Помилка в email';
+        return;
+    }
+    if(phone.length < 13) {
+        document.getElementById("error").innerText = 'Помилка у номері телефону';
+        return;
+    }
+
+    let data = {
         adress: adress,
-        price: price,        
+        price: price,
         name: name,
         email: email,
         phone: phone,
         transaction_type: transactionType,
         currency_type: currencyType
-    }
+    };
 
     tg.sendData(JSON.stringify(data));
-
     tg.close();
 });
     </script>
