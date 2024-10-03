@@ -85,7 +85,6 @@
         <input type="text" placeholder="Введіть ціну" id="user_price">
         <input type="text" placeholder="Вкажіть комісію у процентах від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
-        <input type="text" placeholder="Email" id="user_email">
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
         <select id="transaction_type">
             <option value="#Продаж">Продам</option>
@@ -122,7 +121,6 @@
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
             let transactionType = document.getElementById("transaction_type").value;
             let currencyType = document.getElementById("currency_type").value;
@@ -147,10 +145,6 @@
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
             }
-            if(email.length < 5) {
-                document.getElementById("error").innerText = 'Помилка в email';
-                return;
-            }
             if(phone.length < 13) {
                 document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
                 return;
@@ -161,7 +155,6 @@
                 price: price,
                 commission: commission,
                 name: name,
-                email: email,
                 phone: phone,
                 transaction_type: transactionType,
                 currency_type: currencyType
