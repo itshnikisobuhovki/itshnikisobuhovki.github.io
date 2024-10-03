@@ -86,7 +86,6 @@
         <input type="text" placeholder="Вкажіть комісію у процентах від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
-        <input type="text" placeholder="Загальна площа приміщень" id="total_area">
         <select id="transaction_type">
             <option value="#Продаж">Продам</option>
             <option value="#Оренда">Здам</option>
@@ -143,7 +142,6 @@
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
             let phone = document.getElementById("user_phone").value;
-            let totalArea = document.getElementById("total_area").value;
             let transactionType = document.getElementById("transaction_type").value;
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
@@ -179,7 +177,6 @@
                 commission: commission,
                 name: name,
                 phone: phone,
-                total_area: totalArea,
                 transaction_type: transactionType,
                 property_type: propertyType,
                 currency_type: currencyType
