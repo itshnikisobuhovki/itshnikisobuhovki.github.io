@@ -109,7 +109,7 @@
             <option value="_автомийку">автомийка</option>
             <option value="_СТО">СТО</option>
             <option value="_фермерське_господарство">фермерське_господарство</option>
-            <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>       
+            <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
         </select>
         <select id="currency_type">
             <option value="гривень">Гривні</option>
@@ -135,80 +135,59 @@
         });
 
         order.addEventListener("click", (event) => {
-                event.preventDefault();
-                document.getElementById("error").innerText = '';
-            
-                let adress = document.getElementById("user_adress").value;
-                let price = document.getElementById("user_price").value;
-                let commission = document.getElementById("user_commission").value;
-                let name = document.getElementById("user_name").value;
-                let phone = document.getElementById("user_phone").value;
-                let totalArea = document.getElementById("total_area").value;
-                let transactionType = document.getElementById("transaction_type").value;
-                let propertyType = document.getElementById("property_type").value;
-                let currencyType = document.getElementById("currency_type").value;
-            
-                // Проверка поля цены на положительное число
-                if (isNaN(price) || Number(price) <= 0) {
-                    document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
-                    return;
-                }
-            
-                // Проверка поля commission на целое число от 0 до 200
-                let commissionValue = Number(commission);
-                if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
-                    document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
-                    return;
-                }
-            
-                // Если commission = 0, передаем как строку "без комісії"
-                if (commissionValue === 0) {
-                    commission = "без комісії";
-                }
-            
-                if (name.length < 2) {
-                    document.getElementById("error").innerText = 'Помилка в імені';
-                    return;
-                }
-            
-                if (phone.length < 13) {
-                    document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
-                    return;
-                }
-            
-                // Логика проверки для поля total_area
-                let totalAreaValue;
-                if (propertyType === "_земельну_ділянку") {
-                    // Если тип недвижимости - "земельна_ділянка", присваиваем None
-                    totalAreaValue = null;
-                } else {
-                    totalAreaValue = Number(totalArea);
-                    if (isNaN(totalAreaValue) || totalAreaValue <= 0 || !Number.isInteger(totalAreaValue)) {
-                        document.getElementById("error").innerText = 'Загальна площа приміщень має бути додатнім цілим числом';
-                        return;
-                    }
-                }
-            
-                let data = {
-                    adress: adress,
-                    price: price,
-                    commission: commission,
-                    name: name,
-                    phone: phone,
-                    transaction_type: transactionType,
-                    property_type: propertyType,
-                    currency_type: currencyType
-                };
-            
-                // Добавляем total_area в данные только если значение не None
-                if (totalAreaValue !== null) {
-                    data.total_area = totalAreaValue;
-                }
-            
-                tg.sendData(JSON.stringify(data));
-                tg.close();
-            });
+            event.preventDefault();
+            document.getElementById("error").innerText = '';
 
+            let adress = document.getElementById("user_adress").value;
+            let price = document.getElementById("user_price").value;
+            let commission = document.getElementById("user_commission").value;
+            let name = document.getElementById("user_name").value;
+            let phone = document.getElementById("user_phone").value;
+            let totalArea = document.getElementById("total_area").value;
+            let transactionType = document.getElementById("transaction_type").value;
+            let propertyType = document.getElementById("property_type").value;
+            let currencyType = document.getElementById("currency_type").value;
+
+            // Проверка поля цены на положительное число
+            if (isNaN(price) || Number(price) <= 0) {
+                document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+                return;
+            }
+            // Проверка поля commission на целое число от 0 до 200
+            let commissionValue = Number(commission);
+            if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
+                document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
+                return;
+            }
+
+            // Если commission = 0, передаем как строку "без комісії"
+            if (commissionValue === 0) {
+                commission = "без комісії";
+            }
+            if(name.length < 2) {
+                document.getElementById("error").innerText = 'Помилка в імені';
+                return;
+            }
+            if(phone.length < 13) {
+                document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
+                return;
+            }
+
+            let data = {
+                adress: adress,
+                price: price,
+                commission: commission,
+                name: name,
+                phone: phone,
+                total_area: totalArea,
+                transaction_type: transactionType,
+                property_type: propertyType,
+                currency_type: currencyType
+            };
+
+            tg.sendData(JSON.stringify(data));
+            tg.close();
+        });
     </script>
 </body>
 </html>
