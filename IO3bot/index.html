@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VE Estate Dnipro</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500@display=swap')
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500@display=swap');
 
         * {
             margin: 0;
@@ -30,11 +30,6 @@
             width: 80%;
             display: block;
             margin: 30px auto;
-        }
-
-        p {
-            width: 350px;
-            margin: 0 auto;
         }
 
         button {
@@ -63,7 +58,7 @@
             text-align: center;
         }
 
-        input {
+        input, select {
             width: 90%;
             outline: none;
             margin: 10px 5%;
@@ -71,6 +66,27 @@
             font-size: 14px;
             border: 2px solid silver;
             border-radius: 5px;
+            display: block;
+        }
+
+        select {
+            font-size: 14px;
+            height: 50px; /* Сделаем высоту одинаковой */
+        }
+
+        #select-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 5%;
+        }
+
+        .select-box {
+            width: 48%; /* Выравниваем ширину всех select */
+        }
+
+        #error {
+            color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -86,35 +102,41 @@
         <input type="text" placeholder="Вкажіть комісію у процентах від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
-        <select id="transaction_type">
-            <option value="#Продам">Продам</option>
-            <option value="#Здам">Здам</option>
-        </select>
-        <select id="property_type">
-            <option value="_квартиру">квартира</option>
-            <option value="_будинок">будинок</option>
-            <option value="_земельну_ділянку">земельна_ділянка</option>
-            <option value="_магазин_салон">магазин_салон</option>
-            <option value="_ресторан_кафе">ресторан_кафе</option>
-            <option value="_офіс">офіс</option>
-            <option value="_склад">склад</option>
-            <option value="_пром_базу">пром_база</option>
-            <option value="_виробництво">виробництво</option>
-            <option value="_базу_відпочинку">база_відпочинку</option>
-            <option value="_готель">готель</option>
-            <option value="_МАФ_кіоск">МАФ_кіоск</option>
-            <option value="_точку_на_базарі">точка_на_базарі</option>
-            <option value="_АЗС">АЗС</option>
-            <option value="_автомийку">автомийка</option>
-            <option value="_СТО">СТО</option>
-            <option value="_фермерське_господарство">фермерське_господарство</option>
-            <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
-        </select>
+
+        <!-- Контейнер для элементов select -->
+        <div id="select-container">
+            <select id="transaction_type" class="select-box">
+                <option value="#Продам">Продам</option>
+                <option value="#Здам">Здам</option>
+            </select>
+            <select id="property_type" class="select-box">
+                <option value="_квартиру">квартира</option>
+                <option value="_будинок">будинок</option>
+                <option value="_земельну_ділянку">земельна_ділянка</option>
+                <option value="_магазин_салон">магазин_салон</option>
+                <option value="_ресторан_кафе">ресторан_кафе</option>
+                <option value="_офіс">офіс</option>
+                <option value="_склад">склад</option>
+                <option value="_пром_базу">пром_база</option>
+                <option value="_виробництво">виробництво</option>
+                <option value="_базу_відпочинку">база_відпочинку</option>
+                <option value="_готель">готель</option>
+                <option value="_МАФ_кіоск">МАФ_кіоск</option>
+                <option value="_точку_на_базарі">точка_на_базарі</option>
+                <option value="_АЗС">АЗС</option>
+                <option value="_автомийку">автомийка</option>
+                <option value="_СТО">СТО</option>
+                <option value="_фермерське_господарство">фермерське_господарство</option>
+                <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
+            </select>
+        </div>
+
         <select id="currency_type">
             <option value="гривень">Гривні</option>
             <option value="доларів">Долари США</option>
             <option value="євро">Євро</option>
         </select>
+
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
     </form>
@@ -126,7 +148,6 @@
         let order = document.getElementById("order");
         tg.expand();
 
-        // Обработчик кнопки "Продати/Здати"
         sell.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
             document.getElementById("form").style.display = "block";
@@ -146,27 +167,25 @@
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
 
-            // Проверка поля цены на положительное число
             if (isNaN(price) || Number(price) <= 0) {
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
                 return;
             }
-            // Проверка поля commission на целое число от 0 до 200
+
             let commissionValue = Number(commission);
             if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
                 document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
                 return;
             }
 
-            // Если commission = 0, передаем как строку "без комісії"
             if (commissionValue === 0) {
                 commission = "без комісії";
             }
-            if(name.length < 2) {
+            if (name.length < 2) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
             }
-            if(phone.length < 13) {
+            if (phone.length < 13) {
                 document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
                 return;
             }
