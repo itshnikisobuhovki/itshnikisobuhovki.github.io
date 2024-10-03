@@ -90,6 +90,26 @@
             <option value="#Продаж">Продам</option>
             <option value="#Оренда">Здам</option>
         </select>
+        <select id="property_type">
+            <option value="_квартиру">квартира</option>
+            <option value="_будинок">будинок</option>
+            <option value="_земельну_ділянку">земельна_ділянка</option>
+            <option value="_магазин_салон">магазин_салон</option>
+            <option value="_ресторан_кафе">ресторан_кафе</option>
+            <option value="_офіс">офіс</option>
+            <option value="_склад">склад</option>
+            <option value="_пром_базу">пром_база</option>
+            <option value="_виробництво">виробництво</option>
+            <option value="_базу_відпочинку">база_відпочинку</option>
+            <option value="_готель">готель</option>
+            <option value="_МАФ_кіоск">МАФ_кіоск</option>
+            <option value="_точку_на_базарі">точка_на_базарі</option>
+            <option value="_АЗС">АЗС</option>
+            <option value="_автомийку">автомийка</option>
+            <option value="_СТО">СТО</option>
+            <option value="_фермерське_господарство">фермерське_господарство</option>
+            <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>       
+        </select>
         <select id="currency_type">
             <option value="гривень">Гривні</option>
             <option value="доларів">Долари США</option>
@@ -123,6 +143,7 @@
             let name = document.getElementById("user_name").value;
             let phone = document.getElementById("user_phone").value;
             let transactionType = document.getElementById("transaction_type").value;
+            let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
 
             // Проверка поля цены на положительное число
@@ -157,6 +178,7 @@
                 name: name,
                 phone: phone,
                 transaction_type: transactionType,
+                property_type: propertyType,
                 currency_type: currencyType
             };
 
