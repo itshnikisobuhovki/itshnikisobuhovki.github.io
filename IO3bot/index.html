@@ -132,16 +132,28 @@
     <script>
         let tg = window.Telegram.WebApp;
         let order = document.getElementById("order");
-        let sendContactButton = document.getElementById("send_contact");
+        let phone = "";  
 
 
-        sendContactButton.addEventListener('click', () => {
-            tg.requestContact().then((contact) => {
-                phone = contact.phoneNumber;
+
+        tg.expand();
+
+        document.getElementById("send_contact").addEventListener("click", () => {
+            // Отправка запроса на получение контакта
+            tg.MainButton.show();
+            tg.sendContactRequest().then((contact) => {
+                if (contact && contact.phone_number) {
+                    phone = contact.phone_number;
+                    document.getElementById("user_phone").value = phone;
+                    document.getElementById("error").innerText = "Контакт отримано!";
+                } else {
+                    document.getElementById("error").innerText = "Помилка: контакт не отримано.";
+                }
+            }).catch(() => {
+                document.getElementById("error").innerText = "Не вдалося отримати контакт.";
             });
         });
 
-        tg.expand();
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
