@@ -86,7 +86,9 @@
         <input type="text" placeholder="Введіть ціну" id="user_price">
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
-        <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
+
+
+        <button id="send_contact">Надіслати контакт</button>
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
@@ -130,6 +132,15 @@
     <script>
         let tg = window.Telegram.WebApp;
         let order = document.getElementById("order");
+        let sendContactButton = document.getElementById("send_contact");
+
+
+        sendContactButton.addEventListener('click', () => {
+            tg.requestContact().then((contact) => {
+                phone = contact.phoneNumber;
+            });
+        });
+
         tg.expand();
 
         order.addEventListener("click", (event) => {
@@ -163,8 +174,8 @@
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
             }
-            if (phone.length < 13) {
-                document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
+            if (!phone) {
+                alert('Спочатку надішліть свій контакт');
                 return;
             }
 
@@ -185,3 +196,10 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
