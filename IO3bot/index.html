@@ -1,8 +1,7 @@
 <!doctype html>
 <head lang="ua">
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VE Estate Dnipro</title>
     <style>
@@ -136,15 +135,10 @@
         tg.expand();
 
         document.getElementById("send_contact").addEventListener("click", () => {
-            tg.sendContactRequest().then((contact) => {
-                if (contact && contact.phone_number) {
-                    document.getElementById("user_phone").value = contact.phone_number;
-                    document.getElementById("error").innerText = "Контакт отримано!";
-                } else {
-                    document.getElementById("error").innerText = "Помилка: контакт не отримано.";
-                }
-            }).catch(() => {
-                document.getElementById("error").innerText = "Не вдалося отримати контакт.";
+            tg.MainButton.show();
+            tg.MainButton.text = "Передайте контакт через чат";
+            tg.MainButton.onClick(() => {
+                tg.showAlert("Передайте контакт через чат.");
             });
         });
 
@@ -158,35 +152,17 @@
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
 
-            if (isNaN(price) || Number(price) <= 0) {
-                document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
-                return;
-            }
-
-            let commissionValue = Number(commission);
-            if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
-                document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
-                return;
-            }
-
-            if (commissionValue === 0) {
-                commission = "без комісії";
-            }
-            if (name.length < 2) {
-                document.getElementById("error").innerText = 'Помилка в імені';
-                return;
-            }
             if (!phone) {
                 document.getElementById("error").innerText = 'Спочатку надішліть свій контакт.';
                 return;
             }
 
             let data = {
-                adress: adress,
-                price: price,
-                commission: commission,
-                name: name,
-                phone: phone,
+                adress,
+                price,
+                commission,
+                name,
+                phone,
                 transaction_type: transactionType,
                 property_type: propertyType,
                 currency_type: currencyType
