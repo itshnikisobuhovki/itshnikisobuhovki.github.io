@@ -145,15 +145,17 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Новая кнопка для запроса контакта
+        // Отправка запроса на получение контакта
         document.getElementById("send_contact").addEventListener("click", () => {
+            tg.MainButton.setText("Передача контакту...");
             tg.sendContactRequest();
         });
 
+        // Обработчик для получения контакта
         tg.onEvent('contact', (contact) => {
             if (contact) {
-                document.getElementById("user_phone").value = contact.phone_number;
                 document.getElementById("error").innerText = "Контакт отримано!";
+                console.log("Контакт получен:", contact.phone_number);
             }
         });
 
