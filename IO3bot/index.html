@@ -23,7 +23,7 @@
 
         #form {
             text-align: center;
-            margin-top: 50px; /* Центрирование формы по вертикали */
+            margin-top: 50px;
         }
 
         input, select {
@@ -39,7 +39,7 @@
 
         select {
             font-size: 14px;
-            height: 50px; /* Сделаем высоту одинаковой */
+            height: 50px;
         }
 
         #select-container {
@@ -49,7 +49,7 @@
         }
 
         .select-box {
-            width: 48%; /* Выравниваем ширину всех select */
+            width: 48%;
         }
 
         button {
@@ -77,16 +77,30 @@
             color: red;
             margin-top: 10px;
         }
+
+        /* Новая кнопка для передачи номера телефона */
+        .contact-button {
+            margin: 20px auto;
+            display: block;
+            border: 2px solid var(--tg-theme-button-text-color);
+            background: transparent;
+            color: var(--tg-theme-button-text-color);
+            border-radius: 5px;
+            padding: 15px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Убрали блок main, теперь форма отображается сразу -->
     <form id="form">
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
         <input type="text" placeholder="Введіть ціну" id="user_price">
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
-        <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
+
+        <!-- Кнопка для передачи номера -->
+        <button id="send_contact" type="button" class="contact-button">Передати контактний номер</button>
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
@@ -129,56 +143,33 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
-        let order = document.getElementById("order");
         tg.expand();
 
-        order.addEventListener("click", (event) => {
-            event.preventDefault();
-            document.getElementById("error").innerText = '';
+        // Новая кнопка для запроса контакта
+        document.getElementById("send_contact").addEventListener("click", () => {
+            tg.sendContactRequest();
+        });
 
+        tg.onEvent('contact', (contact) => {
+            if (contact) {
+                document.getElementById("user_phone").value = contact.phone_number;
+                document.getElementById("error").innerText = "Контакт отримано!";
+            }
+        });
+
+        document.getElementById("order").addEventListener("click", () => {
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
             let phone = document.getElementById("user_phone").value;
-            let transactionType = document.getElementById("transaction_type").value;
-            let propertyType = document.getElementById("property_type").value;
-            let currencyType = document.getElementById("currency_type").value;
 
-            if (isNaN(price) || Number(price) <= 0) {
-                document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+            if (!phone) {
+                document.getElementById("error").innerText = 'Помилка: передайте номер телефону.';
                 return;
             }
 
-            let commissionValue = Number(commission);
-            if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
-                document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
-                return;
-            }
-
-            if (commissionValue === 0) {
-                commission = "без комісії";
-            }
-            if (name.length < 2) {
-                document.getElementById("error").innerText = 'Помилка в імені';
-                return;
-            }
-            if (phone.length < 13) {
-                document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
-                return;
-            }
-
-            let data = {
-                adress: adress,
-                price: price,
-                commission: commission,
-                name: name,
-                phone: phone,
-                transaction_type: transactionType,
-                property_type: propertyType,
-                currency_type: currencyType
-            };
-
+            let data = { adress, price, commission, name, phone };
             tg.sendData(JSON.stringify(data));
             tg.close();
         });
