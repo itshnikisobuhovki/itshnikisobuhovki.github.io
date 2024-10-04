@@ -80,15 +80,17 @@
     </style>
 </head>
 <body>
-    <!-- Убрали блок main, теперь форма отображается сразу -->
     <form id="form">
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
         <input type="text" placeholder="Введіть ціну" id="user_price">
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
 
+        <!-- Скрытое поле для номера телефона -->
+        <input type="hidden" id="user_phone">
 
-        <button id="send_contact">Надіслати контакт</button>
+        <!-- Кнопка для передачи номера -->
+        <button id="send_contact" type="button">Надіслати контакт</button>
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
@@ -99,22 +101,22 @@
             <select id="property_type" class="select-box">
                 <option value="_квартиру">квартира</option>
                 <option value="_будинок">будинок</option>
-                <option value="_земельну_ділянку">земельна_ділянка</option>
-                <option value="_магазин_салон">магазин_салон</option>
-                <option value="_ресторан_кафе">ресторан_кафе</option>
+                <option value="_земельну_ділянку">земельна ділянка</option>
+                <option value="_магазин_салон">магазин-салон</option>
+                <option value="_ресторан_кафе">ресторан-кафе</option>
                 <option value="_офіс">офіс</option>
                 <option value="_склад">склад</option>
-                <option value="_пром_базу">пром_база</option>
+                <option value="_пром_базу">промислова база</option>
                 <option value="_виробництво">виробництво</option>
-                <option value="_базу_відпочинку">база_відпочинку</option>
+                <option value="_базу_відпочинку">база відпочинку</option>
                 <option value="_готель">готель</option>
-                <option value="_МАФ_кіоск">МАФ_кіоск</option>
-                <option value="_точку_на_базарі">точка_на_базарі</option>
+                <option value="_МАФ_кіоск">МАФ/кіоск</option>
+                <option value="_точку_на_базарі">точка на базарі</option>
                 <option value="_АЗС">АЗС</option>
                 <option value="_автомийку">автомийка</option>
                 <option value="_СТО">СТО</option>
-                <option value="_фермерське_господарство">фермерське_господарство</option>
-                <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
+                <option value="_фермерське_господарство">фермерське господарство</option>
+                <option value="_гараж_паркувальне_місце">гараж/паркувальне місце</option>
             </select>
         </div>
 
@@ -131,20 +133,12 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
-        let order = document.getElementById("order");
-        let phone = "";  
-
-
-
         tg.expand();
 
         document.getElementById("send_contact").addEventListener("click", () => {
-            // Отправка запроса на получение контакта
-            tg.MainButton.show();
             tg.sendContactRequest().then((contact) => {
                 if (contact && contact.phone_number) {
-                    phone = contact.phone_number;
-                    document.getElementById("user_phone").value = phone;
+                    document.getElementById("user_phone").value = contact.phone_number;
                     document.getElementById("error").innerText = "Контакт отримано!";
                 } else {
                     document.getElementById("error").innerText = "Помилка: контакт не отримано.";
@@ -154,11 +148,7 @@
             });
         });
 
-
-        order.addEventListener("click", (event) => {
-            event.preventDefault();
-            document.getElementById("error").innerText = '';
-
+        document.getElementById("order").addEventListener("click", () => {
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
@@ -187,7 +177,7 @@
                 return;
             }
             if (!phone) {
-                alert('Спочатку надішліть свій контакт');
+                document.getElementById("error").innerText = 'Спочатку надішліть свій контакт.';
                 return;
             }
 
@@ -208,10 +198,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
