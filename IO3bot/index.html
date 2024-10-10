@@ -87,6 +87,7 @@
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
+        <input type="text" placeholder="Зробіть стислий опис об'єкта" id="user_discription">
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
@@ -156,6 +157,7 @@
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
             let phone = document.getElementById("user_phone").value;
+            let description = document.getElementById("user_description").value;
             let transactionType = document.getElementById("transaction_type").value;
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
@@ -183,6 +185,10 @@
                 document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
                 return;
             }
+            if (description.length < 20) {
+                document.getElementById("error").innerText = 'Помилка у описі';
+                return;
+            }
 
             let data = {
                 adress: adress,
@@ -190,6 +196,7 @@
                 commission: commission,
                 name: name,
                 phone: phone,
+                description: description,
                 transaction_type: transactionType,
                 property_type: propertyType,
                 currency_type: currencyType,
