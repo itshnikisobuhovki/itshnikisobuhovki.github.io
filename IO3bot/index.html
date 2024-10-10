@@ -114,6 +114,22 @@
                 <option value="_фермерське_господарство">фермерське_господарство</option>
                 <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
             </select>
+            <select id="district_type" class="select-box">
+                <option value="Дніпро_Нижньодніпровський_АНД">Дніпро_Нижньодніпровський_АНД</option>
+                <option value="Дніпро_Соборний">Дніпро_Соборний</option>
+                <option value="Дніпро_Індустріальний">Дніпро_Індустріальний</option>
+                <option value="Дніпро_Центральний">Дніпро_Центральний</option>
+                <option value="Дніпро_Чечеловський">Дніпро_Чечеловський</option>
+                <option value="Дніпро_Новокодацький">Дніпро_Новокодацький</option>
+                <option value="Дніпро_Самарський">Дніпро_Самарський</option>
+                <option value="Дніпро_Дніпровський">Дніпро_Дніпровський</option>
+                <option value="Кам'янський">Кам'янський</option>
+                <option value="Криворіжський">Криворіжський</option>
+                <option value="Нікопольський">Нікопольський</option>
+                <option value="Самар_Новомосковський">Самар_Новомосковський</option>
+                <option value="Матвіїв_Павлоградський">Матвіїв_Павлоградський</option>
+                <option value="Ріднопіль_Синельниківський">Ріднопіль_Синельниківський</option>
+            </select>
         </div>
 
         <select id="currency_type">
@@ -144,6 +160,7 @@
             let transactionType = document.getElementById("transaction_type").value;
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
+            let currencyType = document.getElementById("district_type").value;
 
             if (isNaN(price) || Number(price) <= 0) {
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
@@ -176,7 +193,8 @@
                 phone: phone,
                 transaction_type: transactionType,
                 property_type: propertyType,
-                currency_type: currencyType
+                currency_type: currencyType,
+                district_type: districtType
             };
 
             tg.sendData(JSON.stringify(data));
