@@ -163,6 +163,11 @@
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
 
+            if (adress.length < 3) {
+                document.getElementById("error").innerText = 'Помилка у адресі';
+                return;
+            }
+
             if (isNaN(price) || Number(price) <= 0) {
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
                 return;
