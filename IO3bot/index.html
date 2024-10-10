@@ -89,9 +89,6 @@
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
         <input type="text" placeholder="Зробіть стислий опис об'єкта" id="user_description">
 
-        <!-- Поле для выбора изображений -->
-        <input type="file" id="user_images" accept="image/*" multiple>
-
         <!-- Контейнер для элементов select -->
         <div id="select-container">
             <select id="transaction_type" class="select-box">
@@ -151,10 +148,9 @@
         let order = document.getElementById("order");
         tg.expand();
 
-
-        document.getElementById("order").addEventListener("click", async (event) => {
-        event.preventDefault();
-        document.getElementById("error").innerText = '';
+        order.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.getElementById("error").innerText = '';
 
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
@@ -166,9 +162,6 @@
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
-
-            // Получаем список изображений
-            let images = document.getElementById("user_images").files;
 
             if (adress.length < 3) {
                 document.getElementById("error").innerText = 'Помилка у адресі';
@@ -202,66 +195,22 @@
                 return;
             }
 
-            // Формируем текст для описания
-    let combinedText = `Адреса: ${adress}\n` +
-                       `Район: ${districtType}\n` +
-                       `Валюта: ${currencyType}\n` +
-                       `Ціна: ${price}\n` +
-                       `Комісія: ${commission}\n` +
-                       `Ім'я: ${name}\n` +
-                       `Телефон: ${phone}\n` +
-                       `Тип угоди: ${transactionType}\n` +
-                       `Тип нерухомості: ${propertyType}\n` +
-                       `Опис: ${description}\n`;
+            let data = {
+                adress: adress,
+                price: price,
+                commission: commission,
+                name: name,
+                phone: phone,
+                user_description: description,
+                transaction_type: transactionType,
+                property_type: propertyType,
+                currency_type: currencyType,
+                district_type: districtType
+            };
 
-            // Если есть изображения, добавляем их в объект данных
-    let data = {
-        caption: combinedText,
-        images: []  // Список изображений, которые будут переданы
-    };
-
-    // Если есть изображения, обрабатываем их и добавляем в data
-    if (images.length > 0) {
-        try {
-            // Читаем все изображения и добавляем в массив data.images
-            let imagesData = await readAllImagesAsDataURL(images);
-            data.images = imagesData;
-        } catch (error) {
-            document.getElementById("error").innerText = 'Помилка при завантаженні зображень';
-            return;
-        }
-    }
-
-    console.log("Данные перед отправкой:", data);
-
-    // Отправка данных в бота
-    tg.sendData(JSON.stringify(data));
-    tg.close();
-});
-
-// Функция для чтения всех изображений и возврата массива base64-кодов
-function readAllImagesAsDataURL(files) {
-    let imagesData = [];
-    let readFilePromises = [];
-
-    for (let i = 0; i < files.length; i++) {
-        readFilePromises.push(
-            new Promise((resolve, reject) => {
-                let reader = new FileReader();
-                reader.onload = function (event) {
-                    imagesData.push(event.target.result);
-                    resolve();
-                };
-                reader.onerror = function () {
-                    reject();
-                };
-                reader.readAsDataURL(files[i]);
-            })
-        );
-    }
-
-    return Promise.all(readFilePromises).then(() => imagesData);
-}
+            tg.sendData(JSON.stringify(data));
+            tg.close();
+        });
     </script>
 </body>
 </html>
