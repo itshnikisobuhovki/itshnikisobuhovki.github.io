@@ -1,7 +1,8 @@
 <!doctype html>
 <head lang="ua">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VE Estate Dnipro</title>
     <style>
@@ -79,17 +80,13 @@
     </style>
 </head>
 <body>
+    <!-- Убрали блок main, теперь форма отображается сразу -->
     <form id="form">
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
         <input type="text" placeholder="Введіть ціну" id="user_price">
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
         <input type="text" placeholder="Ім'я" id="user_name">
-
-        <!-- Скрытое поле для номера телефона -->
-        <input type="hidden" id="user_phone">
-
-        <!-- Кнопка для передачи номера -->
-        <button id="send_contact" type="button">Надіслати контакт</button>
+        <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
@@ -100,22 +97,22 @@
             <select id="property_type" class="select-box">
                 <option value="_квартиру">квартира</option>
                 <option value="_будинок">будинок</option>
-                <option value="_земельну_ділянку">земельна ділянка</option>
-                <option value="_магазин_салон">магазин-салон</option>
-                <option value="_ресторан_кафе">ресторан-кафе</option>
+                <option value="_земельну_ділянку">земельна_ділянка</option>
+                <option value="_магазин_салон">магазин_салон</option>
+                <option value="_ресторан_кафе">ресторан_кафе</option>
                 <option value="_офіс">офіс</option>
                 <option value="_склад">склад</option>
-                <option value="_пром_базу">промислова база</option>
+                <option value="_пром_базу">пром_база</option>
                 <option value="_виробництво">виробництво</option>
-                <option value="_базу_відпочинку">база відпочинку</option>
+                <option value="_базу_відпочинку">база_відпочинку</option>
                 <option value="_готель">готель</option>
-                <option value="_МАФ_кіоск">МАФ/кіоск</option>
-                <option value="_точку_на_базарі">точка на базарі</option>
+                <option value="_МАФ_кіоск">МАФ_кіоск</option>
+                <option value="_точку_на_базарі">точка_на_базарі</option>
                 <option value="_АЗС">АЗС</option>
                 <option value="_автомийку">автомийка</option>
                 <option value="_СТО">СТО</option>
-                <option value="_фермерське_господарство">фермерське господарство</option>
-                <option value="_гараж_паркувальне_місце">гараж/паркувальне місце</option>
+                <option value="_фермерське_господарство">фермерське_господарство</option>
+                <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
             </select>
         </div>
 
@@ -132,17 +129,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
+        let order = document.getElementById("order");
         tg.expand();
 
-        document.getElementById("send_contact").addEventListener("click", () => {
-            tg.MainButton.show();
-            tg.MainButton.text = "Передайте контакт через чат";
-            tg.MainButton.onClick(() => {
-                tg.showAlert("Передайте контакт через чат.");
-            });
-        });
+        order.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.getElementById("error").innerText = '';
 
-        document.getElementById("order").addEventListener("click", () => {
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
@@ -152,17 +145,35 @@
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
 
-            if (!phone) {
-                document.getElementById("error").innerText = 'Спочатку надішліть свій контакт.';
+            if (isNaN(price) || Number(price) <= 0) {
+                document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+                return;
+            }
+
+            let commissionValue = Number(commission);
+            if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
+                document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
+                return;
+            }
+
+            if (commissionValue === 0) {
+                commission = "без комісії";
+            }
+            if (name.length < 2) {
+                document.getElementById("error").innerText = 'Помилка в імені';
+                return;
+            }
+            if (phone.length < 13) {
+                document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
                 return;
             }
 
             let data = {
-                adress,
-                price,
-                commission,
-                name,
-                phone,
+                adress: adress,
+                price: price,
+                commission: commission,
+                name: name,
+                phone: phone,
                 transaction_type: transactionType,
                 property_type: propertyType,
                 currency_type: currencyType
