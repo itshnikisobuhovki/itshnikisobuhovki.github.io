@@ -89,6 +89,9 @@
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
         <input type="text" placeholder="Зробіть стислий опис об'єкта" id="user_description">
 
+        <!-- Поле для выбора изображений -->
+        <input type="file" id="user_images" accept="image/*" multiple>
+
         <!-- Контейнер для элементов select -->
         <div id="select-container">
             <select id="transaction_type" class="select-box">
@@ -162,7 +165,10 @@
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
-             
+
+            // Получаем список изображений
+            let images = document.getElementById("user_images").files;
+
             if (adress.length < 3) {
                 document.getElementById("error").innerText = 'Помилка у адресі';
                 return;
@@ -207,6 +213,19 @@
                 currency_type: currencyType,
                 district_type: districtType
             };
+
+            // Если есть изображения, добавляем их в данные
+            if (images.length > 0) {
+                let imagesData = [];
+                for (let i = 0; i < images.length; i++) {
+                    let reader = new FileReader();
+                    reader.onload = function(event) {
+                        imagesData.push(event.target.result);
+                    };
+                    reader.readAsDataURL(images[i]);
+                }
+                data.images = imagesData;
+            }
 
             tg.sendData(JSON.stringify(data));
             tg.close();
