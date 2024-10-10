@@ -125,9 +125,7 @@
                 <option value="#Дніпро_Новокодацький">Дніпро_Новокодацький</option>
                 <option value="#Дніпро_Самарський">Дніпро_Самарський</option>
                 <option value="#Дніпро_Дніпровський">Дніпро_Дніпровський</option>
-                <optgroup label="Кам'янське">
-                    <option value="#Кам'янський">Кам'янський</option>
-                </optgroup>
+                <option value="#Кам'янський">Кам'янський</option>
                 <option value="#Криворіжський">Криворіжський</option>
                 <option value="#Нікопольський">Нікопольський</option>
                 <option value="#Самар_Новомосковський">Самар_Новомосковський</option>
@@ -163,8 +161,9 @@
             let transactionType = document.getElementById("transaction_type").value;
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
-            let districtType = document.getElementById("district_type").value;
-
+            let districtType = encodeURIComponent(document.getElementById("district_type").value);
+ 
+             
             if (adress.length < 3) {
                 document.getElementById("error").innerText = 'Помилка у адресі';
                 return;
