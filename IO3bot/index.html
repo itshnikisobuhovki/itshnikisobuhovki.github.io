@@ -202,35 +202,39 @@
                 return;
             }
 
-            let data = {
-                adress: adress,
-                price: price,
-                commission: commission,
-                name: name,
-                phone: phone,
-                user_description: description,
-                transaction_type: transactionType,
-                property_type: propertyType,
-                currency_type: currencyType,
-                district_type: districtType
-            };
+            // Формируем текст для описания
+    let combinedText = `Адреса: ${adress}\n` +
+                       `Район: ${districtType}\n` +
+                       `Валюта: ${currencyType}\n` +
+                       `Ціна: ${price}\n` +
+                       `Комісія: ${commission}\n` +
+                       `Ім'я: ${name}\n` +
+                       `Телефон: ${phone}\n` +
+                       `Тип угоди: ${transactionType}\n` +
+                       `Тип нерухомості: ${propertyType}\n` +
+                       `Опис: ${description}\n`;
 
-             // Если есть изображения, обрабатываем их
+            // Если есть изображения, добавляем их в объект данных
+    let data = {
+        caption: combinedText,
+        images: []  // Список изображений, которые будут переданы
+    };
+
+    // Если есть изображения, обрабатываем их и добавляем в data
     if (images.length > 0) {
         try {
-            // Ждем, пока все изображения будут прочитаны и добавлены в массив
+            // Читаем все изображения и добавляем в массив data.images
             let imagesData = await readAllImagesAsDataURL(images);
-            data.images = imagesData; // Добавляем изображения в объект данных
+            data.images = imagesData;
         } catch (error) {
             document.getElementById("error").innerText = 'Помилка при завантаженні зображень';
             return;
         }
     }
 
-    // Проверяем, что изображения успешно добавлены перед отправкой данных
     console.log("Данные перед отправкой:", data);
 
-    // Отправляем данные в бота
+    // Отправка данных в бота
     tg.sendData(JSON.stringify(data));
     tg.close();
 });
