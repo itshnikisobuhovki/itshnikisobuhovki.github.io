@@ -151,9 +151,10 @@
         let order = document.getElementById("order");
         tg.expand();
 
-        order.addEventListener("click", (event) => {
-            event.preventDefault();
-            document.getElementById("error").innerText = '';
+
+        document.getElementById("order").addEventListener("click", async (event) => {
+        event.preventDefault();
+        document.getElementById("error").innerText = '';
 
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
@@ -214,22 +215,45 @@
                 district_type: districtType
             };
 
-            // Если есть изображения, добавляем их в данные
+            // Если есть изображения, обрабатываем их
             if (images.length > 0) {
-                let imagesData = [];
-                for (let i = 0; i < images.length; i++) {
-                    let reader = new FileReader();
-                    reader.onload = function(event) {
-                        imagesData.push(event.target.result);
-                    };
-                    reader.readAsDataURL(images[i]);
+                try {
+                    // Ждем, пока все изображения будут прочитаны и добавлены в массив
+                    let imagesData = await readAllImagesAsDataURL(images);
+                    data.images = imagesData; // Добавляем изображения в объект данных
+                } catch (error) {
+                    document.getElementById("error").innerText = 'Помилка при завантаженні зображень';
+                    return;
                 }
-                data.images = imagesData;
             }
 
             tg.sendData(JSON.stringify(data));
             tg.close();
         });
+
+        // Функция для чтения всех изображений и возврата массива base64-кодов
+        function readAllImagesAsDataURL(files) {
+            let imagesData = [];
+            let readFilePromises = [];
+
+            for (let i = 0; i < files.length; i++) {
+                readFilePromises.push(
+                    new Promise((resolve, reject) => {
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
+                            imagesData.push(event.target.result);
+                            resolve();
+                        };
+                        reader.onerror = function () {
+                            reject();
+                        };
+                        reader.readAsDataURL(files[i]);
+                    })
+                );
+            }
+
+            return Promise.all(readFilePromises).then(() => imagesData);
+        }
     </script>
 </body>
 </html>
