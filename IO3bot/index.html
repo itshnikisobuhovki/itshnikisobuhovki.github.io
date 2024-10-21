@@ -186,6 +186,7 @@
         let order = document.getElementById("order");
         let areaInput = document.getElementById("area-input");
         let areaField = document.getElementById("user_area");
+        let propertyType = document.getElementById("property_type");
         tg.expand();
 
         // Функция для отображения или скрытия поля общей площади
@@ -274,6 +275,9 @@
             tg.sendData(JSON.stringify(data));
             tg.close();
         });
+
+        // Вызываем toggleAreaField при загрузке, чтобы сразу отображать или скрывать поле
+        toggleAreaField();
     </script>
 </body>
 </html>
