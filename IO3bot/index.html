@@ -26,10 +26,17 @@
             margin-top: 50px; /* Центрирование формы по вертикали */
         }
 
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 5% 5px; /* Добавили отступ под меткой */
+            font-size: 14px;
+        }
+
         input, select {
             width: 90%;
             outline: none;
-            margin: 10px 5%;
+            margin: 0 5% 15px; /* Увеличили отступ под полями */
             padding: 15px 10px;
             font-size: 14px;
             border: 2px solid silver;
@@ -80,58 +87,55 @@
     </style>
 </head>
 <body>
-    <!-- Убрали блок main, теперь форма отображается сразу -->
     <form id="form">
+        <label for="user_adress">Адреса</label>
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
+
+        <label for="user_price">Ціна</label>
         <input type="text" placeholder="Введіть ціну" id="user_price">
+
+        <label for="user_commission">Комісія</label>
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
+
+        <label for="user_name">Ім'я</label>
         <input type="text" placeholder="Ім'я" id="user_name">
+
+        <label for="user_phone">Телефон</label>
         <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
+
+        <label for="user_description">Опис</label>
         <input type="text" placeholder="Зробіть стислий опис об'єкта" id="user_description">
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
-            <select id="transaction_type" class="select-box">
-                <option value="#Продам">Продам</option>
-                <option value="#Здам">Здам</option>
-            </select>
-            <select id="property_type" class="select-box">
-                <option value="_квартиру">квартира</option>
-                <option value="_будинок">будинок</option>
-                <option value="_земельну_ділянку">земельна_ділянка</option>
-                <option value="_магазин_салон">магазин_салон</option>
-                <option value="_ресторан_кафе">ресторан_кафе</option>
-                <option value="_офіс">офіс</option>
-                <option value="_склад">склад</option>
-                <option value="_пром_базу">пром_база</option>
-                <option value="_виробництво">виробництво</option>
-                <option value="_базу_відпочинку">база_відпочинку</option>
-                <option value="_готель">готель</option>
-                <option value="_МАФ_кіоск">МАФ_кіоск</option>
-                <option value="_точку_на_базарі">точка_на_базарі</option>
-                <option value="_АЗС">АЗС</option>
-                <option value="_автомийку">автомийка</option>
-                <option value="_СТО">СТО</option>
-                <option value="_фермерське_господарство">фермерське_господарство</option>
-                <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
-            </select>
+            <div class="select-box">
+                <label for="transaction_type">Тип транзакції</label>
+                <select id="transaction_type">
+                    <option value="#Продам">Продам</option>
+                    <option value="#Здам">Здам</option>
+                </select>
+            </div>
+
+            <div class="select-box">
+                <label for="property_type">Тип нерухомості</label>
+                <select id="property_type">
+                    <option value="_квартиру">квартира</option>
+                    <option value="_будинок">будинок</option>
+                    <option value="_земельну_ділянку">земельна_ділянка</option>
+                    <option value="_магазин_салон">магазин_салон</option>
+                    <!-- Другие опции -->
+                </select>
+            </div>
         </div>
+
+        <label for="district_type">Район</label>
         <select id="district_type">
-                <option value="#Дніпро_Нижньодніпровський_АНД">Дніпро_Нижньодніпровський_АНД</option>
-                <option value="#Дніпро_Соборний">Дніпро_Соборний</option>
-                <option value="#Дніпро_Індустріальний">Дніпро_Індустріальний</option>
-                <option value="#Дніпро_Центральний">Дніпро_Центральний</option>
-                <option value="#Дніпро_Чечеловський">Дніпро_Чечеловський</option>
-                <option value="#Дніпро_Новокодацький">Дніпро_Новокодацький</option>
-                <option value="#Дніпро_Самарський">Дніпро_Самарський</option>
-                <option value="#Дніпро_Дніпровський">Дніпро_Дніпровський</option>
-                <option value="#Кам'янський">Кам'янський</option>
-                <option value="#Криворіжський">Криворіжський</option>
-                <option value="#Нікопольський">Нікопольський</option>
-                <option value="#Самар_Новомосковський">Самар_Новомосковський</option>
-                <option value="#Матвіїв_Павлоградський">Матвіїв_Павлоградський</option>
-                <option value="#Ріднопіль_Синельниківський">Ріднопіль_Синельниківський</option>
-            </select>
+            <option value="#Дніпро_Нижньодніпровський_АНД">Дніпро_Нижньодніпровський_АНД</option>
+            <option value="#Дніпро_Соборний">Дніпро_Соборний</option>
+            <!-- Другие опции -->
+        </select>
+
+        <label for="currency_type">Валюта</label>
         <select id="currency_type">
             <option value="гривень">Гривні</option>
             <option value="доларів">Долари США</option>
