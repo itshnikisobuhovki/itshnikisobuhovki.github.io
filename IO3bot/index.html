@@ -191,11 +191,11 @@
 
         // Функция для отображения или скрытия поля общей площади
         function toggleAreaField() {
-            if (propertyType.value === "_земельну_ділянку") {
-                areaInput.style.display = "none";
-                areaField.value = ""; // Очистить поле
-            } else {
-                areaInput.style.display = "block";
+            if (propertyType.value !== "_земельну_ділянку") {
+                if (isNaN(area) || Number(area) <= 0) {
+                    document.getElementById("error").innerText = 'Помилка: площа має бути додатнім числом';
+                    return;
+                }
             }
         }
 
