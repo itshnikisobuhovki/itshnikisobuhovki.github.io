@@ -84,6 +84,10 @@
             color: red;
             margin-top: 10px;
         }
+
+        #area-input {
+            display: none; /* Скрываем по умолчанию */
+        }
     </style>
 </head>
 <body>
@@ -166,6 +170,12 @@
             <option value="євро">Євро</option>
         </select>
 
+        <!-- Поле для общей площади помещений -->
+        <div id="area-input">
+            <label for="user_area">Загальна площа (м²)</label>
+            <input type="text" placeholder="Введіть загальну площу в м²" id="user_area">
+        </div>
+
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
     </form>
@@ -174,7 +184,22 @@
     <script>
         let tg = window.Telegram.WebApp;
         let order = document.getElementById("order");
+        let areaInput = document.getElementById("area-input");
+        let areaField = document.getElementById("user_area");
         tg.expand();
+
+        // Функция для отображения или скрытия поля общей площади
+        function toggleAreaField() {
+            if (propertyType.value === "_земельну_ділянку") {
+                areaInput.style.display = "none";
+                areaField.value = ""; // Очистить поле
+            } else {
+                areaInput.style.display = "block";
+            }
+        }
+
+        // Добавляем обработчик на изменение типа недвижимости
+        propertyType.addEventListener("change", toggleAreaField);
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
@@ -190,6 +215,15 @@
             let propertyType = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
+
+            // Проверка площади
+            let area = areaField.value;
+            if (propertyTypeValue !== "_земельну_ділянку") {
+                if (isNaN(area) || Number(area) <= 0) {
+                    document.getElementById("error").innerText = 'Помилка: площа має бути додатнім числом';
+                    return;
+                }
+            }
 
             if (adress.length < 3) {
                 document.getElementById("error").innerText = 'Помилка у адресі';
@@ -233,7 +267,8 @@
                 transaction_type: transactionType,
                 property_type: propertyType,
                 currency_type: currencyType,
-                district_type: districtType
+                district_type: districtType,
+                area: area || "N/A" // Поле площади, если есть
             };
 
             tg.sendData(JSON.stringify(data));
