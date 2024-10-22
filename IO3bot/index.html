@@ -233,6 +233,7 @@
 
         if (isNaN(value) || Number(value) < 0) {
             input.value = ""; // Очистить поле, если введено некорректное значение
+            document.getElementById("error").innerText = 'Помилка, можна ввести тільки додатні числа або 0';
         }
     }
 
@@ -243,6 +244,15 @@
         // Добавляем обработчики ввода для полей общей площади и площади земельного участка
         areaField.addEventListener("input", validateNumberInput);
         landAreaField.addEventListener("input", validateNumberInput);
+
+
+        // Добавляем обработчики ввода для полей "ціна" и "комісія"
+        let priceField = document.getElementById("user_price");
+        let commissionField = document.getElementById("user_commission");
+
+        priceField.addEventListener("input", validateNumberInput);
+        commissionField.addEventListener("input", validateNumberInput);
+
 
 
         order.addEventListener("click", (event) => {
@@ -285,20 +295,23 @@
                 return;
             }
 
+            // Проверка цены
             if (isNaN(price) || Number(price) <= 0) {
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
                 return;
             }
-
+        
+            // Проверка комиссии
             let commissionValue = Number(commission);
             if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
                 document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
                 return;
             }
-
+        
             if (commissionValue === 0) {
                 commission = "без комісії";
             }
+
             if (name.length < 2) {
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
