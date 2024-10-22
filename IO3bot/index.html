@@ -102,7 +102,7 @@
         <label for="user_price">Ціна</label>
         <input type="text" placeholder="Введіть ціну (тільки цифри без букв)" id="user_price">
 
-        <label for="user_commission">Комісія (якщо ви агент з нерузомості)</label>
+        <label for="user_commission">Комісія (якщо ви агент з нерухомості)</label>
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
 
         <label for="user_name">Ім'я</label>
@@ -233,7 +233,7 @@
 
         if (isNaN(value) || Number(value) < 0) {
             input.value = ""; // Очистить поле, если введено некорректное значение
-            document.getElementById("error").innerText = 'Помилка, можна ввести тільки додатні числа або 0';
+     
         }
     }
 
@@ -300,14 +300,14 @@
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
                 return;
             }
-        
+
             // Проверка комиссии
             let commissionValue = Number(commission);
             if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
                 document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
                 return;
             }
-        
+
             if (commissionValue === 0) {
                 commission = "без комісії";
             }
