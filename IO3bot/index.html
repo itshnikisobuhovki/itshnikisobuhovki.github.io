@@ -88,6 +88,10 @@
         #area-input {
             display: none; /* Скрываем по умолчанию */
         }
+
+        #land_area-input {
+            display: none; /* Скрываем по умолчанию */
+        }
     </style>
 </head>
 <body>
@@ -176,6 +180,12 @@
             <input type="text" placeholder="Введіть загальну площу в м²" id="user_area">
         </div>
 
+        <!-- Поле для площади земельного участка -->
+        <div id="land_area-input">
+            <label for="user_land_area">Площа земельної ділянки (соток)</label>
+            <input type="text" placeholder="Введіть площу ділянки в сотках(1сотка = 0,01Га) " id="user_area">
+        </div>
+
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
     </form>
@@ -186,6 +196,8 @@
         let order = document.getElementById("order");
         let areaInput = document.getElementById("area-input");
         let areaField = document.getElementById("user_area");
+        let landAreaInput = document.getElementById("land_area-input");
+        let areaField = document.getElementById("user_land_area");
         let propertyType = document.getElementById("property_type");
         tg.expand();
 
@@ -199,8 +211,39 @@
             }
         }
 
+    // Функция для отображения или скрытия поля площади земельного участка
+    function toggleLandAreaField() {
+        if (propertyType.value === "_квартиру" ||
+            propertyType.value === "_магазин_салон" ||
+            propertyType.value === "_ресторан_кафе" ||
+            propertyType.value === "_офіс" ||
+            propertyType.value === "_МАФ_кіоск" ||
+            propertyType.value === "_точку_на_базарі") {
+            landAreaInput.style.display = "none";
+            landAreaField.value = ""; // Очистить значение площади, если поле скрыто
+        } else {
+            landAreaInput.style.display = "block";
+        }
+    }
+
+        // Функция для проверки ввода только чисел от 0 и выше
+    function validateNumberInput(event) {
+        let input = event.target;
+        let value = input.value;
+
+        if (isNaN(value) || Number(value) < 0) {
+            input.value = ""; // Очистить поле, если введено некорректное значение
+        }
+    }
+
         // Добавляем обработчик на изменение типа недвижимости
         propertyType.addEventListener("change", toggleAreaField);
+        propertyType.addEventListener("change", toggleLandAreaField);
+
+        // Добавляем обработчики ввода для полей общей площади и площади земельного участка
+        areaField.addEventListener("input", validateNumberInput);
+        landAreaField.addEventListener("input", validateNumberInput);
+
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
@@ -217,10 +260,23 @@
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
 
-                // Проверка площади
+            // Проверка общей площади
             let area = areaField.value;
             if (propertyTypeValue !== "_земельну_ділянку" && (isNaN(area) || Number(area) <= 0)) {
-                document.getElementById("error").innerText = 'Помилка: площа має бути додатнім числом';
+                document.getElementById("error").innerText = 'Помилка: загальна площа приміщень має бути додатнім числом';
+                return;
+            }
+
+            // Проверка площади земельного участка
+            let land_area = landAreaField.value;
+            if (propertyTypeValue !== "_квартиру" &&
+                propertyTypeValue !== "_магазин_салон" &&
+                propertyTypeValue !== "_ресторан_кафе" &&
+                propertyTypeValue !== "_офіс" &&
+                propertyTypeValue !== "_МАФ_кіоск" &&
+                propertyTypeValue !== "_точку_на_базарі" &&
+                (isNaN(land_area) || Number(land_area) <= 0)) {
+                document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
                 return;
             }
 
@@ -267,15 +323,17 @@
                 property_type: propertyTypeValue,
                 currency_type: currencyType,
                 district_type: districtType,
-                area: area || "N/A" // Поле площади, если есть
+                area: area || "N/A",
+                land_area: land_area || "N/A"
             };
 
             tg.sendData(JSON.stringify(data));
             tg.close();
         });
 
-        // Вызываем toggleAreaField при загрузке, чтобы сразу отображать или скрывать поле
+        // Вызываем toggleAreaField и toggleLandAreaField() при загрузке, чтобы сразу отображать или скрывать поле
         toggleAreaField();
+        toggleLandAreaField();
     </script>
 </body>
 </html>
