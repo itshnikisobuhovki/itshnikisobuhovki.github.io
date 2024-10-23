@@ -334,7 +334,7 @@
                 propertyTypeValue !== "_офіс" &&
                 propertyTypeValue !== "_МАФ_кіоск" &&
                 propertyTypeValue !== "_точку_на_базарі" &&
-                (isNaN(land_area) || Number(land_area) <= 0)) {
+                (isNaN(land_area) || Number(land_area) < 0)) {
                 document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
                 return;
             }
