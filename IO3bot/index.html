@@ -365,8 +365,8 @@
         }
 
         // Проверка комиссии
-        if (isNaN(commission) || Number(commission) <= 0) {
-            document.getElementById("error").innerText = 'Помилка, комісія має бути додатнім числом';
+        if (Number(commission) < 0) {
+            document.getElementById("error").innerText = 'Помилка, комісія - додатнє число або 0';
             return;
         }
 
