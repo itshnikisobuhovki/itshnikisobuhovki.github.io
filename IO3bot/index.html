@@ -186,74 +186,69 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+let tg = window.Telegram.WebApp;
+tg.expand();
 
-        let order = document.getElementById("order");
-        let propertyType = document.getElementById("property_type");
-        let areaInput = document.getElementById("area-input");
-        let landAreaInput = document.getElementById("land_area-input");
-        let numberRoomInput = document.getElementById("number_room-input");
+let order = document.getElementById("order");
+let propertyType = document.getElementById("property_type");
+let areaInput = document.getElementById("area-input");
+let landAreaInput = document.getElementById("land_area-input");
+let numberRoomInput = document.getElementById("number_room-input");
 
-        let area = document.getElementById("user_area").value;
-        let land_area = document.getElementById("land_area").value;
-        let number_room = document.getElementById("number_room").value;
+const propertyVisibilityRules = {
+    _земельну_ділянку: { area: false, land: true, rooms: false },
+    _квартиру: { area: true, land: false, rooms: true },
+    _будинок: { area: true, land: true, rooms: true },
+    _магазин_салон: { area: true, land: false, rooms: false },
+    _ресторан_кафе: { area: true, land: false, rooms: false },
+    _офіс: { area: true, land: false, rooms: false },
+    _склад: { area: true, land: false, rooms: false },
+    _пром_базу: { area: true, land: true, rooms: false },
+    _виробництво: { area: true, land: true, rooms: false },
+    _базу_відпочинку: { area: true, land: true, rooms: false },
+    _готель: { area: true, land: true, rooms: true },
+    _МАФ_кіоск: { area: true, land: false, rooms: false },
+    _точку_на_базарі: { area: true, land: false, rooms: false },
+    _АЗС: { area: true, land: true, rooms: false },
+    _автомийку: { area: true, land: true, rooms: false },
+    _СТО: { area: true, land: true, rooms: false },
+    _фермерське_господарство: { area: true, land: true, rooms: false },
+    _гараж_паркувальне_місце: { area: true, land: false, rooms: false }
+};
 
+function toggleFields() {
+    let type = propertyType.value;
+    let rules = propertyVisibilityRules[type] || {};
 
-        const propertyVisibilityRules = {
-            _земельну_ділянку: { area: false, land: true, rooms: false },  // Только площадь земли
-            _квартиру: { area: true, land: false, rooms: true },  // Площадь и комнаты
-            _будинок: { area: true, land: true, rooms: true },  // Площадь, земля и комнаты
-            _магазин_салон: { area: true, land: false, rooms: false },  // Только площадь
-            _ресторан_кафе: { area: true, land: false, rooms: false },  // Только площадь
-            _офіс: { area: true, land: false, rooms: false },  // Только площадь
-            _склад: { area: true, land: false, rooms: false },  // Только площадь
-            _пром_базу: { area: true, land: true, rooms: false },  // Площадь и земля
-            _виробництво: { area: true, land: true, rooms: false },  // Площадь и земля
-            _базу_відпочинку: { area: true, land: true, rooms: false },  // Площадь и земля
-            _готель: { area: true, land: true, rooms: true },  // Площадь, земля и комнаты
-            _МАФ_кіоск: { area: true, land: false, rooms: false },  // Только площадь
-            _точку_на_базарі: { area: true, land: false, rooms: false },  // Только площадь
-            _АЗС: { area: true, land: true, rooms: false },  // Площадь и земля
-            _автомийку: { area: true, land: true, rooms: false },  // Площадь и земля
-            _СТО: { area: true, land: true, rooms: false },  // Площадь и земля
-            _фермерське_господарство: { area: true, land: true, rooms: false },  // Площадь и земля
-            _гараж_паркувальне_місце: { area: true, land: false, rooms: false }  // Только площадь
-        };
+    areaInput.style.display = rules.area ? "block" : "none";
+    landAreaInput.style.display = rules.land ? "block" : "none";
+    numberRoomInput.style.display = rules.rooms ? "block" : "none";
+}
 
-        function toggleFields() {
-            let type = propertyType.value;
-            let rules = propertyVisibilityRules[type] || {};
+propertyType.addEventListener("change", toggleFields);
+toggleFields();
 
-            areaInput.style.display = rules.area ? "block" : "none";
-            landAreaInput.style.display = rules.land ? "block" : "none";
-            numberRoomInput.style.display = rules.rooms ? "block" : "none";
-        }
+// Проверка ввода только чисел
+function validateNumberInput(event) {
+    let value = event.target.value;
+    if (isNaN(value) || Number(value) < 0) {
+        event.target.value = "";
+    }
+}
 
-        propertyType.addEventListener("change", toggleFields);
-        toggleFields(); // Запуск при загрузке
+// Проверка целых чисел для комнат
+function validateIntegerInput(event) {
+    let value = event.target.value;
+    if (!/^\d+$/.test(value)) {
+        event.target.value = "";
+    }
+}
 
-        // Проверка ввода только чисел
-        function validateNumberInput(event) {
-            let value = event.target.value;
-            if (isNaN(value) || Number(value) < 0) {
-                event.target.value = "";
-            }
-        }
-
-        // Проверка целых чисел для комнат
-        function validateIntegerInput(event) {
-            let value = event.target.value;
-            if (!/^\d+$/.test(value)) {
-                event.target.value = "";
-            }
-        }
-
-        document.getElementById("user_price").addEventListener("input", validateNumberInput);
-        document.getElementById("user_commission").addEventListener("input", validateNumberInput);
-        document.getElementById("user_area").addEventListener("input", validateNumberInput);
-        document.getElementById("land_area").addEventListener("input", validateNumberInput);
-        document.getElementById("number_room").addEventListener("input", validateIntegerInput);
+document.getElementById("user_price").addEventListener("input", validateNumberInput);
+document.getElementById("user_commission").addEventListener("input", validateNumberInput);
+document.getElementById("user_area").addEventListener("input", validateNumberInput);
+document.getElementById("land_area").addEventListener("input", validateNumberInput);
+document.getElementById("number_room").addEventListener("input", validateIntegerInput);
 
 order.addEventListener("click", () => {
     let adress = document.getElementById("user_adress").value;
@@ -317,7 +312,7 @@ order.addEventListener("click", () => {
     }
 
     // Проверка телефона
-    if (phone.length < 13) {
+    if (!/^\+38\d{10}$/.test(phone)) {
         document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
         return;
     }
@@ -346,10 +341,3 @@ order.addEventListener("click", () => {
 
     tg.sendData(JSON.stringify(data));
 });
-
-
-            tg.sendData(JSON.stringify(data));
-        });
-    </script>
-</body>
-</html>
