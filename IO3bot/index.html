@@ -196,14 +196,24 @@
         let numberRoomInput = document.getElementById("number_room-input");
 
         const propertyVisibilityRules = {
-            _земельну_ділянку: { area: false, land: true, rooms: false },
-            _квартиру: { area: true, land: false, rooms: true },
-            _будинок: { area: true, land: true, rooms: true },
-            _комерційну_нерухомість: { area: true, land: false, rooms: false },
-            _гараж: { area: true, land: false, rooms: false },
-            _офіс: { area: true, land: false, rooms: false },
-            _склад: { area: true, land: false, rooms: false },
-            _торговельну_площу: { area: true, land: false, rooms: false }
+            _земельну_ділянку: { area: false, land: true, rooms: false },  // Только площадь земли
+            _квартиру: { area: true, land: false, rooms: true },  // Площадь и комнаты
+            _будинок: { area: true, land: true, rooms: true },  // Площадь, земля и комнаты
+            _магазин_салон: { area: true, land: false, rooms: false },  // Только площадь
+            _ресторан_кафе: { area: true, land: false, rooms: false },  // Только площадь
+            _офіс: { area: true, land: false, rooms: false },  // Только площадь
+            _склад: { area: true, land: false, rooms: false },  // Только площадь
+            _пром_базу: { area: true, land: true, rooms: false },  // Площадь и земля
+            _виробництво: { area: true, land: true, rooms: false },  // Площадь и земля
+            _базу_відпочинку: { area: true, land: true, rooms: false },  // Площадь и земля
+            _готель: { area: true, land: true, rooms: true },  // Площадь, земля и комнаты
+            _МАФ_кіоск: { area: true, land: false, rooms: false },  // Только площадь
+            _точку_на_базарі: { area: true, land: false, rooms: false },  // Только площадь
+            _АЗС: { area: true, land: true, rooms: false },  // Площадь и земля
+            _автомийку: { area: true, land: true, rooms: false },  // Площадь и земля
+            _СТО: { area: true, land: true, rooms: false },  // Площадь и земля
+            _фермерське_господарство: { area: true, land: true, rooms: false },  // Площадь и земля
+            _гараж_паркувальне_місце: { area: true, land: false, rooms: false }  // Только площадь
         };
 
         function toggleFields() {
