@@ -166,7 +166,7 @@
         </select>
 
         <div id="area-input">
-            <label for="user_area">Загальна площа (м²)</label>
+            <label for="user_area">Загальна площа приміщень(м²)</label>
             <input type="text" placeholder="Площа в м²" id="user_area">
         </div>
 
@@ -181,7 +181,7 @@
         </div>
 
         <div id="error"></div>
-        <button id="order" type="button">Опублікувати</button>
+        <button id="order" type="button">Опублікувати оголошення</button>
     </form>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -194,6 +194,11 @@
         let areaInput = document.getElementById("area-input");
         let landAreaInput = document.getElementById("land_area-input");
         let numberRoomInput = document.getElementById("number_room-input");
+
+        let area = document.getElementById("user_area").value;
+        let land_area = document.getElementById("land_area").value;
+        let number_room = document.getElementById("number_room").value;
+
 
         const propertyVisibilityRules = {
             _земельну_ділянку: { area: false, land: true, rooms: false },  // Только площадь земли
@@ -250,22 +255,98 @@
         document.getElementById("land_area").addEventListener("input", validateNumberInput);
         document.getElementById("number_room").addEventListener("input", validateIntegerInput);
 
-        order.addEventListener("click", () => {
-            let data = {
-                adress: document.getElementById("user_adress").value,
-                price: document.getElementById("user_price").value,
-                commission: document.getElementById("user_commission").value,
-                name: document.getElementById("user_name").value,
-                phone: document.getElementById("user_phone").value,
-                description: document.getElementById("user_description").value,
-                transaction_type: document.getElementById("transaction_type").value,
-                property_type: propertyType.value,
-                currency_type: document.getElementById("currency_type").value,
-                district_type: document.getElementById("district_type").value,
-                area: document.getElementById("user_area").value || "N/A",
-                land_area: document.getElementById("land_area").value || "N/A",
-                rooms: document.getElementById("number_room").value || "N/A"
-            };
+order.addEventListener("click", () => {
+    let adress = document.getElementById("user_adress").value;
+    let price = document.getElementById("user_price").value;
+    let commission = document.getElementById("user_commission").value;
+    let name = document.getElementById("user_name").value;
+    let phone = document.getElementById("user_phone").value;
+    let description = document.getElementById("user_description").value;
+    let transactionType = document.getElementById("transaction_type").value;
+    let propertyTypeValue = document.getElementById("property_type").value;
+    let currencyType = document.getElementById("currency_type").value;
+    let districtType = document.getElementById("district_type").value;
+
+    let area = document.getElementById("user_area").value;
+    let land_area = document.getElementById("land_area").value;
+    let number_room = document.getElementById("number_room").value;
+
+    // Проверки площадей и комнат только если они видимы
+    if (areaInput.style.display !== "none" && (isNaN(area) || Number(area) <= 0)) {
+        document.getElementById("error").innerText = 'Помилка: загальна площа приміщень має бути додатнім числом';
+        return;
+    }
+
+    if (landAreaInput.style.display !== "none" && (isNaN(land_area) || Number(land_area) < 0)) {
+        document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
+        return;
+    }
+
+    if (numberRoomInput.style.display !== "none" && (!Number.isInteger(Number(number_room)) || Number(number_room) <= 0)) {
+        document.getElementById("error").innerText = 'Помилка: кількість кімнат повинна бути додатнім цілим числом';
+        return;
+    }
+
+    // Проверка адреса
+    if (adress.length < 3) {
+        document.getElementById("error").innerText = 'Помилка у адресі';
+        return;
+    }
+
+    // Проверка цены
+    if (isNaN(price) || Number(price) <= 0) {
+        document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+        return;
+    }
+
+    // Проверка комиссии
+    let commissionValue = Number(commission);
+    if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
+        document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
+        return;
+    }
+
+    if (commissionValue === 0) {
+        commission = "без комісії";
+    }
+
+    // Проверка имени
+    if (name.length < 2) {
+        document.getElementById("error").innerText = 'Помилка в імені';
+        return;
+    }
+
+    // Проверка телефона
+    if (phone.length < 13) {
+        document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
+        return;
+    }
+
+    // Проверка описания
+    if (description.length < 20) {
+        document.getElementById("error").innerText = 'Опис має бути більше 20 символів';
+        return;
+    }
+
+    let data = {
+        adress: adress,
+        price: price,
+        commission: commission,
+        name: name,
+        phone: phone,
+        user_description: description,
+        transaction_type: transactionType,
+        property_type: propertyTypeValue,
+        currency_type: currencyType,
+        district_type: districtType,
+        area: area || "N/A",
+        land_area: land_area || "N/A",
+        number_room: number_room || "N/A"
+    };
+
+    tg.sendData(JSON.stringify(data));
+});
+
 
             tg.sendData(JSON.stringify(data));
         });
