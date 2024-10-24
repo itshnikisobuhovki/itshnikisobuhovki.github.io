@@ -338,6 +338,10 @@
                 document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
                 return;
             }
+            
+            if (landAreaField.value === 0) {
+                land_area = "площа земельної ділянки не вказана або дорівнює 0";
+            }
 
             // Проверка количества комнат
             let number_room = numberRoomField.value;
