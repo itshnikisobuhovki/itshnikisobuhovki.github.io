@@ -218,9 +218,7 @@
     // Функция для отображения или скрытия поля площади земельного участка
     function toggleLandAreaField() {
         if (propertyType.value === "_квартиру" ||
-            propertyType.value === "_магазин_салон" ||
-            propertyType.value === "_ресторан_кафе" ||
-            propertyType.value === "_офіс" ||
+            propertyType.value === "_гараж_паркувальне_місце" ||
             propertyType.value === "_МАФ_кіоск" ||
             propertyType.value === "_точку_на_базарі") {
             landAreaInput.style.display = "none";
@@ -321,9 +319,7 @@
             // Проверка площади земельного участка
             let land_area = landAreaField.value;
             if (propertyTypeValue !== "_квартиру" &&
-                propertyTypeValue !== "_магазин_салон" &&
-                propertyTypeValue !== "_ресторан_кафе" &&
-                propertyTypeValue !== "_офіс" &&
+                propertyTypeValue !== "_гараж_паркувальне_місце" &&
                 propertyTypeValue !== "_МАФ_кіоск" &&
                 propertyTypeValue !== "_точку_на_базарі" &&
                 (isNaN(land_area) || Number(land_area) < 0)) {
