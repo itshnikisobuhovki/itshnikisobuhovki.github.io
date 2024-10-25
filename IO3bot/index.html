@@ -188,6 +188,12 @@
             <input type="text" placeholder="Введіть кількість кімнат " id="number_room">
         </div>
 
+        <label for="floor">Поверх</label>
+        <select id="floor">
+             <option value="підвал">Підвал</option>
+             <option value="цоколь">Цоколь</option>
+        </select>
+
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
     </form>
@@ -204,6 +210,43 @@
         let numberRoomField = document.getElementById("number_room");
         let propertyType = document.getElementById("property_type");
         tg.expand();
+
+        // Функция для создания опций этажей
+        function createFloorOptions() {
+          const floorSelect = document.getElementById('floor');
+          for (let i = 1; i <= 50; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.text = i;
+            floorSelect.appendChild(option);
+          }
+        }
+
+        // Вызов функции для создания опций
+        createFloorOptions();
+
+        // Массив типов недвижимости, для которых поле "поверх" скрывается
+        const hideFloorForTypes = [
+          "_будинок",
+          "_земельну_ділянку",
+          "_пром_базу",
+          "_виробництво",
+          "_базу_відпочинку",
+          "_готель",
+          "_МАФ_кіоск",
+          "_точку_на_базарі",
+          "_АЗС",
+          "_автомийку",
+          "_СТО",
+          "_фермерське_господарство",
+          "_гараж_паркувальне_місце"
+        ];
+
+        // Функция для скрытия поля "поверх" при необходимости
+        function toggleFloorField() {
+          const floorSelect = document.getElementById('floor');
+          floorSelect.style.display = hideFloorForTypes.includes(propertyType.value) ? 'none' : 'block';
+        }
 
         // Функция для отображения или скрытия поля общей площади
         function toggleAreaField() {
@@ -277,7 +320,7 @@
         propertyType.addEventListener("change", toggleAreaField);
         propertyType.addEventListener("change", toggleLandAreaField);
         propertyType.addEventListener("change", toggleNumberRoomField);
-
+        propertyType.addEventListener("change", toggleFloorField);
 
         // Добавляем обработчики ввода для полей общей площади, площади земельного участка,
         // количества комнат,
@@ -308,6 +351,7 @@
             let propertyTypeValue = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
+            let floor = document.getElementById("floor_type").value;
 
             // Проверка общей площади
             let area = areaField.value;
@@ -397,6 +441,7 @@
                 area: area || "N/A",
                 land_area: land_area || "N/A",
                 number_room: number_room || "N/A"
+                floor: floor || "N/A"
             };
 
             tg.sendData(JSON.stringify(data));
@@ -407,6 +452,7 @@
         toggleAreaField();
         toggleLandAreaField();
         toggleNumberRoomField();
+        toggleFloorField();
     </script>
 </body>
 </html>
