@@ -85,7 +85,7 @@
             margin-top: 10px;
         }
 
-        #area-input, #land_area-input, #number_room-input {
+        #area-input, #land_area-input, #number_room-input, #floor-input {
             display: none;
         }
     </style>
@@ -188,11 +188,19 @@
             <input type="text" placeholder="Введіть кількість кімнат " id="number_room">
         </div>
 
-        <label for="floor">Поверх</label>
-        <select id="floor">
-             <option value="підвал">Підвал</option>
-             <option value="цоколь">Цоколь</option>
-        </select>
+        <!-- Поле для номера этажа -->
+        <div id="floor-input">
+            <label for="user_floor">Поверх</label>
+            <select id="user_floor">
+                <option value="підвал">підвал</option>
+                <option value="цоколь">цоколь</option>
+                <script>
+                    for (let i = 1; i <= 50; i++) {
+                        document.write(`<option value="${i}">${i}й</option>`);
+                    }
+                </script>
+            </select>
+        </div>
 
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
@@ -208,45 +216,10 @@
         let landAreaField = document.getElementById("land_area");
         let numberRoomInput = document.getElementById("number_room-input");
         let numberRoomField = document.getElementById("number_room");
+        let floorInput = document.getElementById("floor-input");
+        let floorField = document.getElementById("user_floor");
         let propertyType = document.getElementById("property_type");
         tg.expand();
-
-        // Функция для создания опций этажей
-        function createFloorOptions() {
-          const floorSelect = document.getElementById('floor');
-          for (let i = 1; i <= 50; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.text = i;
-            floorSelect.appendChild(option);
-          }
-        }
-
-        // Вызов функции для создания опций
-        createFloorOptions();
-
-        // Массив типов недвижимости, для которых поле "поверх" скрывается
-        const hideFloorForTypes = [
-          "_будинок",
-          "_земельну_ділянку",
-          "_пром_базу",
-          "_виробництво",
-          "_базу_відпочинку",
-          "_готель",
-          "_МАФ_кіоск",
-          "_точку_на_базарі",
-          "_АЗС",
-          "_автомийку",
-          "_СТО",
-          "_фермерське_господарство",
-          "_гараж_паркувальне_місце"
-        ];
-
-        // Функция для скрытия поля "поверх" при необходимости
-        function toggleFloorField() {
-          const floorSelect = document.getElementById('floor');
-          floorSelect.style.display = hideFloorForTypes.includes(propertyType.value) ? 'none' : 'block';
-        }
 
         // Функция для отображения или скрытия поля общей площади
         function toggleAreaField() {
@@ -292,6 +265,28 @@
             numberRoomInput.style.display = "block";
         }
     }
+    // Функция для отображения или скрытия поля этаж
+    function toggleFloorField() {
+        if (propertyType.value === "_будинок" ||
+            propertyType.value === "_земельну_ділянку" ||
+            propertyType.value == = "_пром_базу" ||
+            propertyType.value == = "_виробництво" ||
+            propertyType.value == = "_базу_відпочинку" ||
+            propertyType.value == = "_готель" ||
+            propertyType.value == = "_МАФ_кіоск" ||
+            propertyType.value == = "_точку_на_базарі" ||
+            propertyType.value == = "_АЗС" ||
+            propertyType.value == = "_автомийку" ||
+            propertyType.value == = "_СТО" ||
+            propertyType.value == = "_фермерське_господарство" ||
+            propertyType.value == = "_гараж_паркувальне_місце") {
+        floorInput.style.display = "none";
+        floorField.value = ""; // Очистить значение этажа, если поле скрыто
+        } else {
+        floorInput.style.display = "block";
+        }
+    }
+
 
         // Функция для проверки ввода только чисел от 0 и выше
     function validateNumberInput(event) {
@@ -322,6 +317,7 @@
         propertyType.addEventListener("change", toggleNumberRoomField);
         propertyType.addEventListener("change", toggleFloorField);
 
+
         // Добавляем обработчики ввода для полей общей площади, площади земельного участка,
         // количества комнат,
         areaField.addEventListener("input", validateNumberInput);
@@ -351,7 +347,6 @@
             let propertyTypeValue = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
-            let floor = document.getElementById("floor_type").value;
 
             // Проверка общей площади
             let area = areaField.value;
@@ -441,7 +436,6 @@
                 area: area || "N/A",
                 land_area: land_area || "N/A",
                 number_room: number_room || "N/A"
-                floor: floor || "N/A"
             };
 
             tg.sendData(JSON.stringify(data));
