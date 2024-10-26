@@ -85,7 +85,7 @@
             margin-top: 10px;
         }
 
-        #area-input, #land_area-input, #number_room-input, #floor-input {
+        #area-input, #land_area-input, #number_room-input, #floor-input, #storeys-input {
             display: none;
         }
     </style>
@@ -201,6 +201,18 @@
                 </script>
             </select>
         </div>
+        
+        <!-- Поле для количества этажей в здании -->
+        <div id="storeys-input">
+            <label for="user_storeys">Кількість поверхів у будівлі</label>
+            <select id="user_storeys">
+                <script>
+                    for (let i = 1; i <= 50; i++) {
+                        document.write(`<option value="${i}">${i}й</option>`);
+                    }
+                </script>
+            </select>
+        </div>        
 
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
@@ -218,6 +230,8 @@
         let numberRoomField = document.getElementById("number_room");
         let floorInput = document.getElementById("floor-input");
         let floorField = document.getElementById("user_floor");
+        let storeysInput = document.getElementById("storeys-input");
+        let storeysField = document.getElementById("user_storeys");        
         let propertyType = document.getElementById("property_type");
         tg.expand();
 
@@ -287,6 +301,28 @@
         floorInput.style.display = "block";
         }
     }
+    
+    // Функция для отображения или скрытия поля количество этажей
+    function toggleStoreysField() {
+        if (propertyType.value === "_будинок" ||
+            propertyType.value === "_земельну_ділянку" ||
+            propertyType.value === "_пром_базу" ||
+            propertyType.value === "_виробництво" ||
+            propertyType.value === "_базу_відпочинку" ||
+            propertyType.value === "_готель" ||
+            propertyType.value === "_МАФ_кіоск" ||
+            propertyType.value === "_точку_на_базарі" ||
+            propertyType.value === "_АЗС" ||
+            propertyType.value === "_автомийку" ||
+            propertyType.value === "_СТО" ||
+            propertyType.value === "_фермерське_господарство" ||
+            propertyType.value === "_гараж_паркувальне_місце") {
+        storeysInput.style.display = "none";
+        storeysField.value = ""; // Очистить значение этажа, если поле скрыто
+        } else {
+        storeysInput.style.display = "block";
+        }
+    }
 
 
         // Функция для проверки ввода только чисел от 0 и выше
@@ -317,6 +353,7 @@
         propertyType.addEventListener("change", toggleLandAreaField);
         propertyType.addEventListener("change", toggleNumberRoomField);
         propertyType.addEventListener("change", toggleFloorField);
+        propertyType.addEventListener("change", toggleStoreysField);
 
 
         // Добавляем обработчики ввода для полей общей площади, площади земельного участка,
@@ -349,6 +386,7 @@
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
             let floor = document.getElementById("user_floor").value;
+            let storeys = document.getElementById("user_storeys").value;
 
             // Проверка общей площади
             let area = areaField.value;
@@ -440,6 +478,7 @@
                 land_area: land_area || "N/A",
                 number_room: number_room || "N/A",
                 floor: floor || "N/A"
+                storeys: storeys || "N/A"
             };
 
             tg.sendData(JSON.stringify(data));
@@ -451,6 +490,7 @@
         toggleLandAreaField();
         toggleNumberRoomField();
         toggleFloorField();
+        toggleStoreysField();
     </script>
 </body>
 </html>
