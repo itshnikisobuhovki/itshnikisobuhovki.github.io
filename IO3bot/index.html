@@ -362,16 +362,17 @@
         priceField.addEventListener("input", validateNumberInput);
         commissionField.addEventListener("input", validateNumberInput);
 
-        requestPhone.addEventListener("click", () = > {
-            tg.MainButton.setText("Поділитися номером телефону")
-        tg.MainButton.show();
+        requestPhone.addEventListener("click", () => {
+            tg.MainButton.setText("Поділитися номером телефону");
+            tg.MainButton.show();
+        
+            tg.onEvent('mainButtonClicked', () => {
+                tg.sendData(JSON.stringify({request_contact: true}));
+                tg.MainButton.hide();
+                document.getElementById("order").style.display = "block";
+            });
+        });
 
-        tg.onEvent('mainButtonClicked', () = > {
-            tg.sendData(JSON.stringify({request_contact: true}));
-        tg.MainButton.hide();
-        document.getElementById("order").style.display = "block";
-        });
-        });
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
@@ -494,7 +495,7 @@
         toggleNumberRoomField();
         toggleFloorField();
         toggleStoreysField();
-        
+
          tg.onEvent('contact', (contact) = > {
             userPhone = contact.phone_number;
         requestPhone.style.display = "none";
