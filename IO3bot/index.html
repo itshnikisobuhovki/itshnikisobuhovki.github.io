@@ -487,11 +487,6 @@
             tg.close();
         });
 
-        tg.onEvent('contact', (contact) = > {
-            userPhone = contact.phone_number;
-        requestPhone.style.display = "none";
-        document.getElementById("order").style.display = "block";
-        });
 
         // Вызываем toggleAreaField и toggleLandAreaField() при загрузке, чтобы сразу отображать или скрывать поле
         toggleAreaField();
@@ -499,6 +494,12 @@
         toggleNumberRoomField();
         toggleFloorField();
         toggleStoreysField();
+        
+         tg.onEvent('contact', (contact) = > {
+            userPhone = contact.phone_number;
+        requestPhone.style.display = "none";
+        document.getElementById("order").style.display = "block";
+        });
     </script>
 </body>
 </html>
