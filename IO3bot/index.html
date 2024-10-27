@@ -361,11 +361,27 @@
 
         priceField.addEventListener("input", validateNumberInput);
         commissionField.addEventListener("input", validateNumberInput);
-
-        requestPhone.addEventListener("click", () => {
+   
+        // Функция для получения номера телефона из Telegram
+        async function getPhoneNumber() {
+          try {
+            const user = await tg.getUser();
+            return user.phone_number;
+          } catch (error) {
+            console.error('Ошибка при получении номера телефона:', error);
+            alert('Произошла ошибка при получении номера телефона. Пожалуйста, попробуйте еще раз.');
+            return null;
+          }
+        }   
+   
+   
+        requestPhone.addEventListener("click", async () => {
             tg.MainButton.setText("Поділитися номером телефону");
             tg.MainButton.show();
-        
+              const phoneNumber = await getPhoneNumber();
+              if (phoneNumber) {
+                userPhone = phoneNumber;
+
             tg.onEvent('mainButtonClicked', () => {
                 tg.sendData(JSON.stringify({request_contact: true}));
                 tg.MainButton.hide();
