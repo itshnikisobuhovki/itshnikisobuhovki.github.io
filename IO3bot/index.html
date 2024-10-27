@@ -104,9 +104,6 @@
         <label for="user_name">Ім'я</label>
         <input type="text" placeholder="Ім'я" id="user_name">
 
-        <label for="user_phone">Телефон</label>
-        <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
-
         <label for="user_description">Опис</label>
         <input type="text" placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description">
 
@@ -215,6 +212,7 @@
         </div>
 
         <div id="error"></div>
+        <button id = "requestPhone" type = "button" > Поділитися номером телефону </button>
         <button id="order" type="button">Опублікувати оголошення</button>
     </form>
 
@@ -233,6 +231,8 @@
         let storeysInput = document.getElementById("storeys-input");
         let storeysField = document.getElementById("user_storeys");
         let propertyType = document.getElementById("property_type");
+        let requestPhone = document.getElementById("requestPhone");
+        let userPhone = "";
         tg.expand();
 
         // Функция для отображения или скрытия поля общей площади
@@ -362,7 +362,16 @@
         priceField.addEventListener("input", validateNumberInput);
         commissionField.addEventListener("input", validateNumberInput);
 
+        requestPhone.addEventListener("click", () = > {
+            tg.MainButton.setText("Поділитися номером телефону")
+        tg.MainButton.show();
 
+        tg.onEvent('mainButtonClicked', () = > {
+            tg.sendData(JSON.stringify({request_contact: true}));
+        tg.MainButton.hide();
+        document.getElementById("order").style.display = "block";
+        });
+        });
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
@@ -461,7 +470,7 @@
                 price: price,
                 commission: commission,
                 name: name,
-                phone: phone,
+                phone: userPhone,
                 user_description: description,
                 transaction_type: transactionType,
                 property_type: propertyTypeValue,
@@ -476,6 +485,12 @@
 
             tg.sendData(JSON.stringify(data));
             tg.close();
+        });
+
+        tg.onEvent('contact', (contact) = > {
+            userPhone = contact.phone_number;
+        requestPhone.style.display = "none";
+        document.getElementById("order").style.display = "block";
         });
 
         // Вызываем toggleAreaField и toggleLandAreaField() при загрузке, чтобы сразу отображать или скрывать поле
