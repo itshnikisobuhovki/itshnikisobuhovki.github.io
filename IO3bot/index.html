@@ -368,9 +368,7 @@
             event.preventDefault();
             document.getElementById("error").innerText = '';
 
-            // Disable the button to prevent multiple submissions
-            if (order.disabled) return; // If already disabled, do nothing
-            order.disabled = true;
+            
 
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
