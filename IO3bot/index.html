@@ -259,14 +259,19 @@
 
         // Функция для отображения или скрытия поля площади земельного участка
         function toggleLandAreaField() {
-            if (propertyType.value === "_квартиру" ||
+            if (propertyType.value === "_земельну_ділянку") {
+                landAreaInput.style.display = "block";
+                landAreaField.required = true;
+            } else if (propertyType.value === "_квартиру" ||
                 propertyType.value === "_гараж_паркувальне_місце" ||
                 propertyType.value === "_МАФ_кіоск" ||
                 propertyType.value === "_точку_на_базарі") {
                 landAreaInput.style.display = "none";
-                landAreaField.value = ""; // Очистить значение площади, если поле скрыто
+                landAreaField.value = "";
+                landAreaField.required = false;
             } else {
                 landAreaInput.style.display = "block";
+                landAreaField.required = false;
             }
         }
 
@@ -357,11 +362,13 @@
         }
 
         // Добавляем обработчик на изменение типа недвижимости
-        propertyType.addEventListener("change", toggleAreaField);
-        propertyType.addEventListener("change", toggleLandAreaField);
-        propertyType.addEventListener("change", toggleNumberRoomField);
-        propertyType.addEventListener("change", toggleFloorField);
-        propertyType.addEventListener("change", toggleStoreysField);
+        propertyType.addEventListener("change", function() {
+            toggleAreaField();
+            toggleLandAreaField();
+            toggleNumberRoomField();
+            toggleFloorField();
+            toggleStoreysField();
+        });
 
         // Добавляем обработчики ввода для полей общей площади, площади земельного участка,
         // количества комнат,
@@ -405,17 +412,22 @@
 
             // Проверка площади земельного участка
             let land_area = landAreaField.value;
-            if (propertyTypeValue !== "_квартиру" &&
+            if (propertyTypeValue === "_земельну_ділянку") {
+                if (isNaN(land_area) || Number(land_area) <= 0) {
+                    document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
+                    landAreaField.classList.add('error');
+                    return;
+                }
+            } else if (propertyTypeValue !== "_квартиру" &&
                 propertyTypeValue !== "_гараж_паркувальне_місце" &&
-                propertyTypeValue !== "_МАФ_кіоск " &&
+                propertyTypeValue !== "_МАФ_кіоск" &&
                 propertyTypeValue !== "_точку_на_базарі" &&
                 (isNaN(land_area) || Number(land_area) < 0)) {
-                document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
-                landAreaField.classList.add('error'); // Добавить класс error для подсветки красным
+                document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом або залишена порожньою';
+                landAreaField.classList.add('error');
                 return;
-            } else {
-                landAreaField.classList.remove('error'); // Удалить класс error, если значение корректное
             }
+            landAreaField.classList.remove('error');
 
             // Проверка количества комнат
             let number_room = numberRoomField.value;
