@@ -88,11 +88,6 @@
         #area-input, #land_area-input, #number_room-input, #floor-input, #storeys-input {
             display: none;
         }
-
-        .invalid {
-            border: 2px solid red; /* Change the border color to red */
-        }
-
     </style>
 </head>
 <body>
@@ -368,13 +363,6 @@
         commissionField.addEventListener("input", validateNumberInput);
 
 
-        function validateField(input, condition) {
-            if (condition) {
-                input.classList.add("invalid"); // Add the invalid class
-            } else {
-                input.classList.remove("invalid"); // Remove the invalid class
-            }
-        }
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
@@ -393,15 +381,9 @@
             let floor = document.getElementById("user_floor").value;
             let storeys = document.getElementById("user_storeys").value;
 
-            // Reset all fields
-            [adress, price, commission, name, phone, description, floor, storeys ].forEach(input => {
-                input.classList.remove("invalid");
-            });
-
             // Проверка общей площади
             let area = areaField.value;
             if (propertyTypeValue !== "_земельну_ділянку" && (isNaN(area) || Number(area) <= 0)) {
-            validateField(area, true);
                 document.getElementById("error").innerText = 'Помилка: загальна площа приміщень має бути додатнім числом';
                 return;
             }
@@ -413,7 +395,6 @@
                 propertyTypeValue !== "_МАФ_кіоск" &&
                 propertyTypeValue !== "_точку_на_базарі" &&
                 (isNaN(land_area) || Number(land_area) < 0)) {
-                validateField(land_area, true);
                 document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
                 return;
             }
@@ -435,21 +416,18 @@
                 propertyTypeValue !== "_гараж_паркувальне_місце" &&
                 propertyTypeValue !== "_виробництво" &&
                 (isNaN(number_room) || Number(number_room) <= 0)) {
-                validateField(number_room, true);
                 document.getElementById("error").innerText = 'Помилка: кількість кімнат тільки додатнє ціле число';
                 return;
             }
 
 
             if (adress.length < 3) {
-                validateField(adress, true);
                 document.getElementById("error").innerText = 'Помилка у адресі';
                 return;
             }
 
             // Проверка цены
             if (isNaN(price) || Number(price) <= 0) {
-                validateField(price, true);
                 document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
                 return;
             }
@@ -457,7 +435,6 @@
             // Проверка комиссии
             let commissionValue = Number(commission);
             if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
-                validateField(commission, true);
                 document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
                 return;
             }
@@ -467,17 +444,14 @@
             }
 
             if (name.length < 2) {
-                validateField(name, true);
                 document.getElementById("error").innerText = 'Помилка в імені';
                 return;
             }
             if (phone.length < 13) {
-                validateField(phone, true);
                 document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
                 return;
             }
             if (description.length < 20) {
-                validateField(description, true);
                 document.getElementById("error").innerText = 'Опис має бути більше 20 символів';
                 return;
             }
