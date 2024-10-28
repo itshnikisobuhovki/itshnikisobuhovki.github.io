@@ -101,8 +101,20 @@
         <label for="user_adress">Адреса</label>
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
 
-        <label for="user_price">Ціна</label>
-        <input type="text" placeholder="Введіть ціну (тільки цифри без букв)" id="user_price">
+        <div id="price-currency-container" style="display: flex; justify-content: space-between; margin: 0 5%;">
+            <div style="width: 48%;">
+                <label for="user_price">Ціна</label>
+                <input type="text" placeholder="Введіть ціну" id="user_price" style="width: 100%;">
+            </div>
+            <div style="width: 48%;">
+                <label for="currency_type">Валюта</label>
+                <select id="currency_type" style="width: 100%;">
+                    <option value="гривень">Гривні</option>
+                    <option value="доларів">Долари США</option>
+                    <option value="євро">Євро</option>
+                </select>
+            </div>
+        </div>
 
         <label for="user_commission">Комісія (якщо ви агент з нерухомості)</label>
         <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
@@ -169,13 +181,7 @@
                 <option value="#Ріднопіль_Синельниківський">Ріднопіль_Синельниківський</option>
         </select>
 
-        <label for="currency_type">Валюта</label>
-        <select id="currency_type">
-            <option value="гривень">Гривні</option>
-            <option value="доларів">Долари США</option>
-            <option value="євро">Євро</option>
-        </select>
-
+     
         <!-- Поле для общей площади помещений -->
         <div id="area-input">
             <label for="user_area">Загальна площа приміщень (м²)</label>
