@@ -5,7 +5,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VE Estate Dnipro</title>
-     <style>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;700&display=swap');
 
         * {
@@ -31,7 +31,7 @@
             text-align: left;
             margin: 10px 5% 5px;
             font-size: 14px;
-            font-weight: 700; /* Сделали текст label более жирным */
+            font-weight: 700;
         }
 
         input, select {
@@ -88,7 +88,7 @@
         #error {
             color: red;
             margin-top: 10px;
-            font-weight: 700; /* Сделали текст ошибок более жирным */
+            font-weight: 700;
         }
 
         #area-input, #land_area-input, #number_room-input, #floor-input, #storeys-input {
@@ -122,8 +122,11 @@
         <label for="user_name">Ім'я</label>
         <input type="text" placeholder="Ім'я" id="user_name">
 
+        <!-- Кнопка для отримання номера телефону -->
+        <button id="getPhoneNumber" type="button">Дозволити передачу номера телефону</button>
+
         <label for="user_phone">Телефон</label>
-        <input type="text" placeholder="Телефон у форматі +38ХХХХХХХХХХ" id="user_phone">
+        <input type ="text" id="user_phone" readonly>
 
         <label for="user_description">Опис</label>
         <input type="text" placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description">
@@ -181,7 +184,6 @@
                 <option value="#Ріднопіль_Синельниківський">Ріднопіль_Синельниківський</option>
         </select>
 
-
         <!-- Поле для общей площади помещений -->
         <div id="area-input">
             <label for="user_area">Загальна площа приміщень (м²)</label>
@@ -191,7 +193,7 @@
         <!-- Поле для площади земельного участка -->
         <div id="land_area-input">
             <label for="user_land_area">Площа земельної ділянки (м²)</label>
-            <input type="text" placeholder="Введіть площу ділянки у м² " id="land_area">
+ <input type="text" placeholder="Введіть площу ділянки у м² " id="land_area">
         </div>
 
         <!-- Поле для количества комнат -->
@@ -234,6 +236,8 @@
     <script>
         let tg = window.Telegram.WebApp;
         let order = document.getElementById("order");
+        let getPhoneNumber = document.getElementById("getPhoneNumber");
+        let userPhone = document.getElementById("user_phone");
         let areaInput = document.getElementById("area-input");
         let areaField = document.getElementById("user_area");
         let landAreaInput = document.getElementById("land_area-input");
@@ -291,7 +295,7 @@
                 propertyType.value === "_гараж_паркувальне_місце" ||
                 propertyType.value === "_виробництво") {
                 numberRoomInput.style.display = "none";
-                numberRoomField.value = ""; // Очистить значение площади, если поле скрыто
+ numberRoomField.value = ""; // Очистить значение площади, если поле скрыто
             } else {
                 numberRoomInput.style.display = "block";
             }
@@ -307,7 +311,7 @@
                 propertyType.value === "_готель" ||
                 propertyType.value === "_МАФ_кіоск" ||
                 propertyType.value === "_точку_на_базарі" ||
-                propertyType .value === "_АЗС" ||
+                propertyType.value === "_АЗС" ||
                 propertyType.value === "_автомийку" ||
                 propertyType.value === "_СТО" ||
                 propertyType.value === "_фермерське_господарство" ||
@@ -315,7 +319,7 @@
                 floorInput.style.display = "none";
                 floorField.value = ""; // Очистить значение этажа, если поле скрыто
             } else {
-                floorInput.style .display = "block";
+                floorInput.style.display = "block";
             }
         }
 
@@ -383,6 +387,12 @@
         priceField.addEventListener("input", validateNumberInput);
         commissionField.addEventListener("input", validateNumberInput);
 
+        getPhoneNumber.addEventListener("click", function() {
+            tg.requestPhoneNumber().then(function(phoneNumber) {
+                userPhone.value = phoneNumber;
+            });
+        });
+
         order.addEventListener("click", (event) => {
             event.preventDefault();
             document.getElementById("error").innerText = '';
@@ -391,7 +401,7 @@
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
-            let phone = document.getElementById("user_phone").value;
+            let phone = document.getElementById("user_phone ").value;
             let description = document.getElementById("user_description").value;
             let transactionType = document.getElementById("transaction_type").value;
             let propertyTypeValue = document.getElementById("property_type").value;
@@ -473,7 +483,7 @@
             let commissionValue = Number(commission);
             if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
                 document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
-                commissionField.classList.add('error'); // Добавить класс error для подсветки красным
+                commissionField .classList.add('error'); // Добавить класс error для подсветки красным
                 return;
             } else {
                 commissionField.classList.remove('error'); // Удалить класс error, если значение корректное
