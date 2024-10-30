@@ -122,10 +122,8 @@
         <label for="user_name">Ім'я</label>
         <input type="text" placeholder="Ім'я" id="user_name">
 
-        <!-- Кнопка для получения номера телефона -->
-        <button id="getPhoneNumber" type="button">Дозволити передачу номера телефону</button>
-
         <label for="user_phone">Телефон</label>
+        <button id="getPhoneNumber" type="button">Дозволити передачу номера телефону</button>
         <input type="text" id="user_phone" readonly>
 
         <label for="user_description">Опис</label>
@@ -237,8 +235,6 @@
     <script>
         let tg = window.Telegram.WebApp;
         let order = document.getElementById("order");
-        let getPhoneNumber = document.getElementById("getPhoneNumber");
-        let userPhone = document.getElementById("user_phone");
         let areaInput = document.getElementById("area-input");
         let areaField = document.getElementById("user_area");
         let landAreaInput = document.getElementById("land_area-input");
@@ -251,18 +247,6 @@
         let storeysField = document.getElementById("user_storeys");
         let propertyType = document.getElementById("property_type");
         tg.expand();
-
-        // Запрос номера телефона
-        getPhoneNumber.addEventListener("click", function() {
-            tg.requestPhoneNumber();
-        });
-
-        // Обработка события получения данных о пользователе
-        window.addEventListener("message", function(event) {
-            if (event.data && event.data.phone_number) {
-                userPhone.value = event.data.phone_number; // Устанавливаем номер телефона в поле
-            }
-        });
 
         // Функция для отображения или скрытия поля общей площади
         function toggleAreaField() {
@@ -408,7 +392,7 @@
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
-            let phone = userPhone.value; // Используем значение из поля
+            let getPhoneNumber = document.getElementById("getPhoneNumber");
             let description = document.getElementById("user_description").value;
             let transactionType = document.getElementById("transaction_type").value;
             let propertyTypeValue = document.getElementById("property_type").value;
@@ -416,6 +400,9 @@
             let districtType = document.getElementById("district_type").value;
             let floor = document.getElementById("user_floor").value;
             let storeys = document.getElementById("user_storeys").value;
+
+
+
 
             // Проверка общей площади
             let area = areaField.value;
@@ -507,6 +494,7 @@
             } else {
                 document.getElementById("user_name").classList.remove('error'); // Удалить класс error, если значение корректное
             }
+
 
             if (description.length < 20) {
                 document.getElementById("error").innerText = 'Опис має бути більше 20 символів';
