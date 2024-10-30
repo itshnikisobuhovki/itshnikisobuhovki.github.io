@@ -252,6 +252,18 @@
         let propertyType = document.getElementById("property_type");
         tg.expand();
 
+        // Запрос номера телефона
+        getPhoneNumber.addEventListener("click", function() {
+            tg.requestPhoneNumber();
+        });
+
+        // Обработка события получения данных о пользователе
+        window.addEventListener("message", function(event) {
+            if (event.data && event.data.phone_number) {
+                userPhone.value = event.data.phone_number; // Устанавливаем номер телефона в поле
+            }
+        });
+
         // Функция для отображения или скрытия поля общей площади
         function toggleAreaField() {
             if (propertyType.value === "_земельну_ділянку") {
@@ -387,18 +399,6 @@
 
         priceField.addEventListener("input", validateNumberInput);
         commissionField.addEventListener("input", validateNumberInput);
-        
-        // Запрос номера телефона
-        getPhoneNumber.addEventListener("click", function() {
-            tg.requestPhoneNumber();
-        });
-
-        // Обработка события получения данных о пользователе
-        window.addEventListener("message", function(event) {
-            if (event.data && event.data.phone_number) {
-                userPhone.value = event.data.phone_number; // Устанавливаем номер телефона в поле
-            }
-        });        
 
         order.addEventListener("click", (event) => {
             event.preventDefault();
@@ -506,14 +506,6 @@
                 return;
             } else {
                 document.getElementById("user_name").classList.remove('error'); // Удалить класс error, если значение корректное
-            }
-
-            if (phone.length < 13) {
-                document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
-                document.getElementById("user_phone").classList.add('error'); // Добавить класс error для подсветки красным
-                return;
-            } else {
-                document.getElementById("user_phone").classList.remove('error'); // Удалить класс error, если значение корректное
             }
 
             if (description.length < 20) {
