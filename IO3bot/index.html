@@ -495,6 +495,26 @@
                 document.getElementById("user_description").classList.remove('error'); // Удалить класс error, если значение корректное
             }
 
+                // Проверка количества этажей в здании
+            let floorNumber = parseInt(floor.replace(/[^0-9]/g, ''));
+            if (isNaN(floorNumber) || floorNumber <= 0) {
+                document.getElementById("error").innerText = 'Помилка: поверх повинен бути додатнім числом';
+                floorField.classList.add('error');
+                return;
+            } else {
+                floorField.classList.remove('error');
+            }
+
+            if (storeys < floorNumber) {
+                document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
+                storeysField.classList.add('error');
+                return;
+            } else {
+                storeysField.classList.remove('error');
+            }
+
+
+
             let data = {
                 adress: adress,
                 price: price,
