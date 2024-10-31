@@ -122,8 +122,6 @@
         <label for="user_name">Ім'я</label>
         <input type="text" placeholder="Ім'я" id="user_name">
 
-
-
         <label for="user_description">Опис</label>
         <input type="text" placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description">
 
@@ -201,7 +199,7 @@
 
         <!-- Поле для номера этажа -->
         <div id="floor-input">
-            <label for="user_floor">Поверх</label>
+            <label for=" user_floor">Поверх</label>
             <select id="user_floor">
                 <script>
                     for (let i = 1; i <= 50; i++) {
@@ -338,7 +336,13 @@
             let input = event.target;
             let value = input.value;
 
-
+            if (isNaN(value) || Number(value) < 0) {
+                input.value = ""; // Очистить поле, если введено некорректное значение
+                input.classList.add('error'); // Добавить класс error для подсветки красным
+            } else {
+                input.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+        }
 
         // Функция для проверки ввода только целых положительных чисел
         function validateIntegerInput(event) {
