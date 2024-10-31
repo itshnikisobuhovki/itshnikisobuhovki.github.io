@@ -384,7 +384,6 @@
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
             let name = document.getElementById("user_name").value;
-            let phone = document.getElementById("user_phone").value;
             let description = document.getElementById("user_description").value;
             let transactionType = document.getElementById("transaction_type").value;
             let propertyTypeValue = document.getElementById("property_type").value;
@@ -484,13 +483,7 @@
                 document.getElementById("user_name").classList.remove('error'); // Удалить класс error, если значение корректное
             }
 
-            if (phone.length < 13) {
-                document.getElementById("error").innerText = 'Телефон має бути у форматі +38ХХХХХХХХХХ';
-                document.getElementById("user_phone").classList.add('error'); // Добавить класс error для подсветки красным
-                return;
-            } else {
-                document.getElementById("user_phone").classList.remove('error'); // Удалить класс error, если значение корректное
-            }
+
 
             if (description.length < 20) {
                 document.getElementById("error").innerText = 'Опис має бути більше 20 символів';
