@@ -380,61 +380,9 @@
         priceField.addEventListener("input", validateNumberInput);
         commissionField.addEventListener("input", validateNumberInput);
 
-<!--        матюки____________________________________________________-->
-            const forbiddenWords = [
-                "мат", "пизда", "хуй", "сосать", "блядь", "урод", "тупой", "идиот", // Русский
-                "матюк", "пизда", "хуй", "сосати", "блядь", "урод", "тупий", "ідіот", // Украинский
-                // Добавьте сюда другие слова, которые хотите заблокировать
-            ];
-
-            // Функция для проверки на наличие запрещенных слов
-            function containsForbiddenWords(value) {
-                return forbiddenWords.some(word => value.toLowerCase().includes(word));
-            }
-
-            // Проверка всех полей на наличие запрещенных слов
-            function validateField(field, errorMessage) {
-                const value = field.value;
-                if (containsForbiddenWords(value)) {
-                    field.classList.add('error'); // Добавить класс error для подсветки красным
-                    document.getElementById("error").innerText = errorMessage;
-                    return false;
-                } else {
-                    field.classList.remove('error'); // Удалить класс error, если значение корректное
-                    return true;
-                }
-            }
-
-            // Добавляем обработчики ввода для полей, где необходимо проверять текст
-            const nameField = document.getElementById("user_name");
-            const addressField = document.getElementById("user_adress");
-            const descriptionField = document.getElementById("user_description");
-
-            nameField.addEventListener("input", () => {
-                validateField(nameField, 'Помилка: введено заборонене слово в імені!');
-            });
-
-            addressField.addEventListener("input", () => {
-                validateField(addressField, 'Помилка: введено заборонене слово в адресі!');
-            });
-
-            descriptionField.addEventListener("input", () => {
-                validateField(descriptionField, 'Помилка: введено заборонене слово в описі!');
-            });
-<!--        матюки____________________________________________________-->
-
         order.addEventListener("click", (event) => {
             event.preventDefault();
             document.getElementById("error").innerText = '';
-
-<!--        матюки____________________________________________________-->
-            // Проверка всех полей
-            if (!validateField(nameField, 'Помилка: введено заборонене слово в імені!') ||
-                !validateField(addressField, 'Помилка: введено заборонене слово в адресі!') ||
-                !validateField(descriptionField, 'Помилка: введено заборонене слово в описі!')) {
-                return; // Если хотя бы одно поле содержит запрещенное слово, выходим
-            }
-<!--        матюки____________________________________________________-->
 
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
