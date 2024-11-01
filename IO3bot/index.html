@@ -123,8 +123,8 @@
         <input type="text" placeholder="Ім'я" id="user_name">
 
         <label for="user_description">Опис</label>
-<textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description" rows="6" style="width: 90%; padding: 15px 10px; border: 2px solid silver; border-radius: 5px; margin: 0 5% 15px;"></textarea>
-
+        <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description" rows="1" style="resize: none; height: 50px;"></textarea>
+       
         <!-- Контейнер для элементов select -->
         <div id="select-container">
             <div class="select-box">
@@ -559,6 +559,19 @@
         toggleNumberRoomField();
         toggleFloorField();
         toggleStoreysField();
+
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto'; // Сначала сбрасываем высоту
+            textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем новую высоту
+        }
+
+        // Добавляем обработчик события input для текстового поля
+        document.getElementById("user_description").addEventListener("input", function() {
+            autoResizeTextarea(this);
+        });
+
+        // Вызываем функцию при загрузке, чтобы установить правильную высоту
+        autoResizeTextarea(document.getElementById("user_description"));
     </script>
 </body>
 </html>
