@@ -495,28 +495,30 @@
                 document.getElementById("user_description").classList.remove('error'); // Удалить класс error, если значение корректное
             }
 
-            // Проверка количества этажей в здании
-            let floorValue = floorField.value;
-            let floorNumber = parseInt(floorValue.replace(/[^0-9]/g, ''));
-        
-            // Проверяем, что введенное значение - это либо "підвал", "цоколь", либо положительное целое число
-            if (floorValue !== "підвал" && floorValue !== "цоколь" && (isNaN(floorNumber) || floorNumber <= 0)) {
-                document.getElementById("error").innerText = 'Помилка: поверх повинен бути "підвал", "цоколь" або додатнім числом';
-                floorField.classList.add('error');
-                return;
-            } else {
-                floorField.classList.remove('error');
-            }
-        
-            // Проверка этажности
-            if (storeys < floorNumber && !isNaN(floorNumber)) {
-                document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
-                storeysField.classList.add('error');
-                return;
-            } else {
-                storeysField.classList.remove('error');
-            }
 
+            // Проверка количества этажей в здании
+            if (floorInput.style.display !== "none") {
+                let floorValue = floorField.value;
+                let floorNumber = parseInt(floorValue.replace(/[^0-9]/g, ''));
+        
+                // Проверяем, что введенное значение - это либо "підвал", "цоколь", либо положительное целое число
+                if (floorValue !== "підвал" && floorValue !== "цоколь" && (isNaN(floorNumber) || floorNumber <= 0)) {
+                    document.getElementById("error").innerText = 'Помилка: поверх повинен бути "підвал", "цоколь" або додатнім числом';
+                    floorField.classList.add('error');
+                    return;
+                } else {
+                    floorField.classList.remove('error');
+                }
+        
+                // Проверка этажности
+                if (storeysInput.style.display !== "none" && storeys < floorNumber && !isNaN(floorNumber)) {
+                    document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
+                    storeysField.classList.add('error');
+                    return;
+                } else {
+                    storeysField.classList.remove('error');
+                }
+            }
 
             let data = {
                 adress: adress,
