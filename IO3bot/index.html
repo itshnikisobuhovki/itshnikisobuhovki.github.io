@@ -242,6 +242,18 @@
         let storeysInput = document.getElementById("storeys-input");
         let storeysField = document.getElementById("user_storeys");
         let propertyType = document.getElementById("property_type");
+        let nameField = document.getElementById("user_name");
+
+        // Проверяем, есть ли сохраненное имя в localStorage и устанавливаем его в поле
+        if (localStorage.getItem("savedName")) {
+            nameField.value = localStorage.getItem("savedName");
+        }
+
+        // Сохраняем имя в localStorage при изменении поля
+        nameField.addEventListener("input", function() {
+            localStorage.setItem("savedName", nameField.value);
+        });
+
         tg.expand();
 
         // Функция для отображения или скрытия поля общей площади
