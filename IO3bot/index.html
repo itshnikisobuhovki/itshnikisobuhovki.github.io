@@ -34,7 +34,7 @@
             font-weight: 700; /* Сделали текст label более жирным */
         }
 
-        input, select {
+        input, select, textarea {
             width: 90%;
             outline: none;
             margin: 0 5% 15px;
@@ -43,6 +43,11 @@
             border: 2px solid silver;
             border-radius: 5px;
             display: block;
+            resize: none; /* Убираем возможность изменения размера для input и textarea */
+        }
+        
+        textarea {
+            height: 50px; /* Устанавливаем одинаковую высоту для textarea */
         }
 
         input.error, select.error {
@@ -124,7 +129,7 @@
 
         <label for="user_description">Опис</label>
         <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description" rows="1" style="resize: none; height: 50px;"></textarea>
-       
+
         <!-- Контейнер для элементов select -->
         <div id="select-container">
             <div class="select-box">
