@@ -211,7 +211,7 @@
         <!-- Поле для номера этажа -->
         <div id="floor-input">
             <label for="user_floor">Поверх</label>
-            <select id="user_floor">
+            <select id="user_floor" multiple>
                 <script>
                     for (let i = 1; i <= 50; i++) {
                         document.write(`<option value="${i}">${i}й</option>`);
@@ -420,7 +420,9 @@
             let propertyTypeValue = document.getElementById("property_type").value;
             let currencyType = document.getElementById("currency_type").value;
             let districtType = document.getElementById("district_type").value;
-            let floor = document.getElementById("user_floor").value;
+            let floorSelect = document.getElementById("user_floor");
+            let selectedFloors = Array.from(floorSelect.selectedOptions).map(option => option.value);
+            let floor = selectedFloors.join(", "); // Преобразуем массив выбранных этажей в строку
             let storeys = document.getElementById("user_storeys").value;
 
             // Проверка общей площади
@@ -523,29 +525,41 @@
             }
 
 
-            // Проверка количества этажей в здании
-            if (floorInput.style.display !== "none") {
-                let floorValue = floorField.value;
-                let floorNumber = parseInt(floorValue.replace(/[^0-9]/g, ''));
-
-                // Проверяем, что введенное значение - это либо "підвал", "цоколь", либо положительное целое число
-                if (floorValue !== "підвал" && floorValue !== "цоколь" && (isNaN(floorNumber) || floorNumber <= 0)) {
-                    document.getElementById("error").innerText = 'Помилка: поверх повинен бути "підвал", "цоколь" або додатнім числом';
-                    floorField.classList.add('error');
-                    return;
-                } else {
-                    floorField.classList.remove('error');
-                }
-
-                // Проверка этажности
-                if (storeysInput.style.display !== "none" && storeys < floorNumber && !isNaN(floorNumber)) {
-                    document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
-                    storeysField.classList.add('error');
-                    return;
-                } else {
-                    storeysField.classList.remove('error');
-                }
+            // Проверка этажа
+            if (floorSelect.style.display !== "none" && selectedFloors.length === 0) {
+                document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх';
+                return;
             }
+
+            // Дополнительная проверка для "підвал" и "цоколь"
+            if (!selectedFloors.includes("підвал") && !selectedFloors.includes("цоколь") && selectedFloors.length === 0) {
+                document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх, або "підвал" чи "цоколь"';
+                return;
+            }
+
+    // Проверка этажности
+    let floorNumber = Math.max(...selectedFloors.filter(f => !isNaN(f)).map(Number)); // Получаем максимальное значение из выбранных этажей
+    let selectedFloorCount = selectedFloors.length;
+
+    if (storeysInput.style.display !== "none") {
+        if (selectedFloorCount > 0 && selectedFloors.includes("підвал") === false && selectedFloors.includes("цоколь") === false) {
+            // Если выбраны этажи и не выбраны "підвал" и "цоколь"
+            if (storeys < floorNumber) {
+                document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
+                storeysField.classList.add('error');
+                return;
+            } else {
+                storeysField.classList.remove('error');
+            }
+        }
+    }
+
+    // Если выбраны только "підвал" или "цоколь"
+    if (selectedFloorCount === 1 && (selectedFloors.includes("підвал") || selectedFloors.includes("цоколь"))) {
+        // Здесь можно не проверять этажность
+        storeysField.classList.remove('error');
+    }
+
 
             let data = {
                 adress: adress,
