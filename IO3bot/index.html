@@ -45,7 +45,7 @@
             display: block;
             resize: none; /* Убираем возможность изменения размера для input и textarea */
         }
-        
+
         textarea {
             height: 50px; /* Устанавливаем одинаковую высоту для textarea */
         }
@@ -145,22 +145,28 @@
                 <select id="property_type">
                 <option value="_квартиру">квартира</option>
                 <option value="_будинок">будинок</option>
-                <option value="_земельну_ділянку">земельна_ділянка</option>
-                <option value="_магазин_салон">магазин_салон</option>
-                <option value="_ресторан_кафе">ресторан_кафе</option>
+                <option value="_земельну_ділянку">земельна ділянка</option>
+                <option value="_магазин_салон">магазин салон</option>
+                <option value="_ресторан_кафе">ресторан кафе</option>
                 <option value="_офіс">офіс</option>
+                <option value="_салон_краси">салон краси</option>
+                <option value="_медичну_установу">медична установа</option>
                 <option value="_склад">склад</option>
-                <option value="_пром_базу">пром_база</option>
+                <option value="_пром_базу">пром база</option>
                 <option value="_виробництво">виробництво</option>
-                <option value="_базу_відпочинку">база_відпочинку</option>
+                <option value="_базу_відпочинку">база відпочинку</option>
                 <option value="_готель">готель</option>
-                <option value="_МАФ_кіоск">МАФ_кіоск</option>
-                <option value="_точку_на_базарі">точка_на_базарі</option>
+                <option value="_МАФ_кіоск">МАФ кіоск</option>
+                <option value="_точку_на_базарі">точка на базарі</option>
                 <option value="_АЗС">АЗС</option>
                 <option value="_автомийку">автомийка</option>
                 <option value="_СТО">СТО</option>
-                <option value="_фермерське_господарство">фермерське_господарство</option>
-                <option value="_гараж_паркувальне_місце">гараж_паркувальне_місце</option>
+                <option value="_фермерське_господарство">фермерське господарство</option>
+                <option value="_гараж_паркувальне_місце">гараж паркувальне місце</option>
+                <option value="_приміщення_вільного_призначення">приміщення вільного призначення</option>
+                <option value="_окрему_нежитлову_будівлю">окрема нежитлова будівля</option>
+                <option value="_установу_освіти">установа освіти</option>
+                <option value="_спортивну_установу">спортивна установа</option>
                 </select>
             </div>
         </div>
@@ -278,6 +284,8 @@
                 landAreaField.required = true;
             } else if (propertyType.value === "_квартиру" ||
                 propertyType.value === "_гараж_паркувальне_місце" ||
+                propertyType.value === "_салон_краси" ||
+                propertyType.value === "_приміщення_вільного_призначення" ||
                 propertyType.value === "_МАФ_кіоск" ||
                 propertyType.value === "_точку_на_базарі") {
                 landAreaInput.style.display = "none";
@@ -293,6 +301,7 @@
         function toggleNumberRoomField() {
             if (propertyType.value === "_земельну_ділянку" ||
                 propertyType.value === "_магазин_салон" ||
+                propertyType.value === "_спортивну_установу" ||
                 propertyType.value === "_ресторан_кафе" ||
                 propertyType.value === "_склад" ||
                 propertyType.value === "_пром_базу" ||
@@ -315,6 +324,7 @@
         function toggleFloorField() {
             if (propertyType.value === "_будинок" ||
                 propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_окрему_нежитлову_будівлю" ||
                 propertyType.value === "_пром_базу" ||
                 propertyType.value === "_виробництво" ||
                 propertyType.value === "_базу_відпочинку" ||
