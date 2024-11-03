@@ -559,6 +559,15 @@
         // Здесь можно не проверять этажность
         storeysField.classList.remove('error');
     }
+    
+        // Проверка этажа, если поле отображается
+    if (floorInput.style.display !== "none") {
+        if (selectedFloors.length === 0) {
+            document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх';
+            return;
+        }
+    }
+
 
 
             let data = {
