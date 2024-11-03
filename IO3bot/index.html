@@ -525,48 +525,35 @@
             }
 
 
- // Проверка этажа
-    if (floorSelect.style.display !== "none" && selectedFloors.length === 0) {
-        document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх';
-        return;
-    }
-
-    // Дополнительная проверка для "підвал" и "цоколь"
-    if (!selectedFloors.includes("підвал") && !selectedFloors.includes("цоколь") && selectedFloors.length === 0) {
-        document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх, або "підвал" чи "цоколь"';
-        return;
-    }
-
-    // Проверка этажности
-    let floorNumber = Math.max(...selectedFloors.filter(f => !isNaN(f)).map(Number)); // Получаем максимальное значение из выбранных этажей
-    let selectedFloorCount = selectedFloors.length;
-
-    if (storeysInput.style.display !== "none") {
-        if (selectedFloorCount > 0 && selectedFloors.includes("підвал") === false && selectedFloors.includes("цоколь") === false) {
-            // Если выбраны этажи и не выбраны "підвал" и "цоколь"
-            if (storeys < floorNumber) {
-                document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
-                storeysField.classList.add('error');
-                return;
-            } else {
+            // Проверка этажа, если поле отображается
+            if (floorInput.style.display !== "none") {
+                if (selectedFloors.length === 0) {
+                    document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх';
+                    return;
+                }
+            }
+        
+            // Проверка этажности
+            let floorNumber = Math.max(...selectedFloors.filter(f => !isNaN(f)).map(Number));
+            let selectedFloorCount = selectedFloors.length;
+        
+            if (storeysInput.style.display !== "none") {
+                if (selectedFloorCount > 0 && selectedFloors.includes("підвал") === false && selectedFloors.includes("цоколь") === false) {
+                    if (storeys < floorNumber) {
+                        document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
+                        storeysField.classList.add('error');
+                        return;
+                    } else {
+                        storeysField.classList.remove('error');
+                    }
+                }
+            }
+        
+            // Если выбраны только "підвал" или "цоколь"
+            if (selectedFloorCount === 1 && (selectedFloors.includes("підвал") || selectedFloors.includes("цоколь"))) {
                 storeysField.classList.remove('error');
             }
-        }
-    }
 
-    // Если выбраны только "підвал" или "цоколь"
-    if (selectedFloorCount === 1 && (selectedFloors.includes("підвал") || selectedFloors.includes("цоколь"))) {
-        // Здесь можно не проверять этажность
-        storeysField.classList.remove('error');
-    }
-
-    // Проверка этажа, если поле отображается
-    if (floorInput.style.display !== "none") {
-        if (selectedFloors.length === 0) {
-            document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх';
-            return;
-        }
-    }
 
             let data = {
                 adress: adress,
