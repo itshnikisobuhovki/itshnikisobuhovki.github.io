@@ -127,10 +127,10 @@
         <input type="text" placeholder="Ім'я" id="user_name">
 
         <label for="user_description">Опис</label>
-        <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description" rows="1"></textarea>
+        <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" ```html
+id="user_description" rows="1"></textarea>
 
         <div id="select-container">
-            ```html
             <div class="select-box">
                 <label for="transaction_type">Тип транзакції</label>
                 <select id="transaction_type">
@@ -189,18 +189,18 @@
         </select>
 
         <div id="area-input">
-            <label for="user_area">Загальна площа приміщень (м²)</label>
-
+            <label for ```html
+="user_area">Загальна площа приміщень (м²)</label>
             <input type="text" placeholder="Введіть загальну площу у м²" id="user_area">
         </div>
 
         <div id="land_area-input">
-            <label for="user_land_area">Площа земельної ділянки (м²)</label>
+            <label for="land_area">Площа земельної ділянки (м²)</label>
             <input type="text" placeholder="Введіть площу ділянки у м²" id="land_area">
         </div>
 
         <div id="number_room-input">
-            <label for="user_number_room">Кількість кімнат</label>
+            <label for="number_room">Кількість кімнат</label>
             <input type="text" placeholder="Введіть кількість кімнат" id="number_room">
         </div>
 
@@ -281,8 +281,9 @@
             const { adress, price, commission, name, description, area, landArea, numberRoom } = formElements;
             const validations = [
                 validateInput(adress, adress.value.length >= 3),
-                validateInput(price, !isNaN(price.value) && Number(price.value) > 0),
- validateInput(commission, !isNaN(commission.value) && Number.isInteger(Number(commission.value)) && Number(commission.value) >= 0 && Number(commission.value) <= 200),
+                validateInput(price ```javascript
+, !isNaN(price.value) && Number(price.value) > 0),
+                validateInput(commission, !isNaN(commission.value) && Number.isInteger(Number(commission.value)) && Number(commission.value) >= 0 && Number(commission.value) <= 200),
                 validateInput(name, name.value.length >= 2),
                 validateInput(description, description.value.length >= 20),
                 validateInput(area, (formElements.propertyType.value !== "_земельну_ділянку" && !isNaN(area.value) && Number(area.value) > 0) || formElements.propertyType.value === "_земельну_ділянку"),
@@ -305,10 +306,10 @@
                 commission: formElements.commission.value,
                 name: formElements.name.value,
                 user_description: formElements.description.value,
-                transaction_type: formElements.transaction_type.value,
+                transaction_type: document.getElementById("transaction_type").value,
                 property_type: formElements.propertyType.value,
-                currency_type: formElements.currency_type.value,
-                district_type: formElements.district_type.value,
+                currency_type: document.getElementById("currency_type").value,
+                district_type: document.getElementById("district_type").value,
                 area: formElements.area.value || "N/A",
                 land_area: formElements.landArea.value || "N/A",
                 number_room: formElements.numberRoom.value || "N/A",
