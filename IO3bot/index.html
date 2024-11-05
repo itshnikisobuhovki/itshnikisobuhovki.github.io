@@ -1,10 +1,11 @@
 <!doctype html>
 <head lang="ua">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VE Estate Dnipro</title>
-    <style>
+ <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;700&display=swap');
 
         * {
@@ -30,7 +31,7 @@
             text-align: left;
             margin: 10px 5% 5px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 700; /* Сделали текст label более жирным */
         }
 
         input, select, textarea {
@@ -42,11 +43,11 @@
             border: 2px solid silver;
             border-radius: 5px;
             display: block;
-            resize: none;
+            resize: none; /* Убираем возможность изменения размера для input и textarea */
         }
 
         textarea {
-            height: 50px;
+            height: 50px; /* Устанавливаем одинаковую высоту для textarea */
         }
 
         input.error, select.error {
@@ -92,7 +93,7 @@
         #error {
             color: red;
             margin-top: 10px;
-            font-weight: 700;
+            font-weight: 700; /* Сделали текст ошибок более жирным */
         }
 
         #area-input, #land_area-input, #number_room-input, #floor-input, #storeys-input {
@@ -108,11 +109,11 @@
         <div id="price-currency-container" style="display: flex; justify-content: space-between; margin: 0 5%;">
             <div style="width: 48%;">
                 <label for="user_price">Ціна</label>
-                <input type="text" placeholder="Введіть ціну" id="user_price">
+                <input type="text" placeholder="Введіть ціну" id="user_price" style="width: 100%;">
             </div>
             <div style="width: 48%;">
                 <label for="currency_type">Валюта</label>
-                <select id="currency_type">
+                <select id="currency_type" style="width: 100%;">
                     <option value="гривень">Гривні</option>
                     <option value="доларів">Долари США</option>
                     <option value="євро">Євро</option>
@@ -127,9 +128,9 @@
         <input type="text" placeholder="Ім'я" id="user_name">
 
         <label for="user_description">Опис</label>
-        <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" ```html
-id="user_description" rows="1"></textarea>
+        <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description" rows="1" style="resize: none; height: 50px;"></textarea>
 
+        <!-- Контейнер для элементов select -->
         <div id="select-container">
             <div class="select-box">
                 <label for="transaction_type">Тип транзакції</label>
@@ -142,69 +143,74 @@ id="user_description" rows="1"></textarea>
             <div class="select-box">
                 <label for="property_type">Тип нерухомості</label>
                 <select id="property_type">
-                    <option value="_квартиру">квартира</option>
-                    <option value="_будинок">будинок</option>
-                    <option value="_земельну_ділянку">земельна ділянка</option>
-                    <option value="_магазин_салон">магазин салон</option>
-                    <option value="_ресторан_кафе">ресторан кафе</option>
-                    <option value="_офіс">офіс</option>
-                    <option value="_салон_краси">салон краси</option>
-                    <option value="_медичну_установу">медична установа</option>
-                    <option value="_склад">склад</option>
-                    <option value="_пром_базу">пром база</option>
-                    <option value="_виробництво">виробництво</option>
-                    <option value="_базу_відпочинку">база відпочинку</option>
-                    <option value="_готель">готель</option>
-                    <option value="_МАФ_кіоск">МАФ кіоск</option>
-                    <option value="_точку_на_базарі">точка на базарі</option>
-                    <option value="_АЗС">АЗС</option>
-                    <option value="_автомийку">автомийка</option>
-                    <option value="_СТО">СТО</option>
-                    <option value="_фермерське_господарство">фермерське господарство</option>
-                    <option value="_гараж_паркувальне_місце">гараж паркувальне місце</option>
-                    <option value="_приміщення_вільного_призначення">приміщення вільного призначення</option>
-                    <option value="_окрему_нежитлову_будівлю">окрема нежитлова будівля</option>
-                    <option value="_установу_освіти">установа освіти</option>
-                    <option value="_спортивну_установу">спортивна установа</option>
+                <option value="_квартиру">квартира</option>
+                <option value="_будинок">будинок</option>
+                <option value="_земельну_ділянку">земельна ділянка</option>
+                <option value="_магазин_салон">магазин салон</option>
+                <option value="_ресторан_кафе">ресторан кафе</option>
+                <option value="_офіс">офіс</option>
+                <option value="_салон_краси">салон краси</option>
+                <option value="_медичну_установу">медична установа</option>
+                <option value="_склад">склад</option>
+                <option value="_пром_базу">пром база</option>
+                <option value="_виробництво">виробництво</option>
+                <option value="_базу_відпочинку">база відпочинку</option>
+                <option value="_готель">готель</option>
+                <option value="_МАФ_кіоск">МАФ кіоск</option>
+                <option value="_точку_на_базарі">точка на базарі</option>
+                <option value="_АЗС">АЗС</option>
+                <option value="_автомийку">автомийка</option>
+                <option value="_СТО">СТО</option>
+                <option value="_фермерське_господарство">фермерське господарство</option>
+                <option value="_гараж_паркувальне_місце">гараж паркувальне місце</option>
+                <option value="_приміщення_вільного_призначення">приміщення вільного призначення</option>
+                <option value="_окрему_нежитлову_будівлю">окрема нежитлова будівля</option>
+                <option value="_установу_освіти">установа освіти</option>
+                <option value="_спортивну_установу">спортивна установа</option>
                 </select>
             </div>
         </div>
 
         <label for="district_type">Район</label>
         <select id="district_type">
-            <option value="#Дніпро_Центральний">Дніпро_Центральний</option>
-            <option value="#Дніпро_Нижньодніпровський_АНД">Дніпро_Нижньодніпровський_АНД</option>
-            <option value="#Дніпро_Соборний">Дніпро_Соборний</option>
-            <option value="#Дніпро_Індустріальний">Дніпро_Індустріальний</option>
-            <option value="#Дніпро_Чечеловський">Дніпро_Чечеловський</option>
-            <option value="#Дніпро_Новокодацький">Дніпро_Новокодацький</option>
-            <option value="#Дніпро_Самарський">Дніпро_Самарський</option>
-            <option value="#Дніпро_Дніпровський">Дніпро_Дніпровський</option>
-            <option value="#Кам'янський">Кам'янський</option>
-            <option value="#Криворіжський">Криворіжський</option>
-            <option value="#Нікопольський">Нікопольський</option>
-            <option value="#Самар_Новомосковський">Самар_Новомосковський</option>
-            <option value="#Матвіїв_Павлоградський">Матвіїв_Павлоградський</option>
-            <option value="#Ріднопіль_Синельниківський">Ріднопіль_Синельниківський</option>
+                <option value="#Дніпро_Центральний">Дніпро_Центральний</option>
+                <option value="#Дніпро_Нижньодніпровський_АНД">Дніпро_Нижньодніпровський_АНД</option>
+                <option value="#Дніпро_Соборний">Дніпро_Соборний</option>
+                <option value="#Дніпро_Індустріальний">Дніпро_Індустріальний</option>
+                <option value="#Дніпро_Чечеловський">Дніпро_Чечеловський</option>
+                <option value="#Дніпро_Новокодацький">Дніпро_Новокодацький</option>
+                <option value="#Дніпро_Самарський">Дніпро_Самарський</option>
+                <option value="#Дніпро_Дніпровський">Дніпро_Дніпровський</option>
+                <option value="#Кам'янський">Кам'янський</option>
+                <option value="#Криворіжський">Криворіжський</option>
+                <option value="#Нікопольський">Нікопольський</option>
+                <option value="#Самар_Новомосковський">Самар_Новомосковський</option>
+                <option value="#Матвіїв_Павлоградський">Матвіїв_Павлоградський</option>
+                <option value="#Ріднопіль_Синельниківський">Ріднопіль_Синельниківський</option>
         </select>
 
+
+        <!-- Поле для общей площади помещений -->
         <div id="area-input">
             <label for="user_area">Загальна площа приміщень (м²)</label>
             <input type="text" placeholder="Введіть загальну площу у м²" id="user_area">
         </div>
 
+        <!-- Поле для площади земельного участка -->
         <div id="land_area-input">
-            <label for="land_area">Площа земельної ділянки (м²)</label>
-            <input type="text" placeholder="Введіть площу ділянки у м²" id="land_area">
+            <label for="user_land_area">Площа земельної ділянки (м²)</label>
+            <input type="text" placeholder="Введіть площу ділянки у м² " id="land_area">
         </div>
 
+        <!-- Поле для количества комнат -->
         <div id="number_room-input">
-            <label for="number_room">Кількість кімнат</label>
-            <input type="text" placeholder="Введіть кількість кімнат" id="number_room">
+            <label for="user_number_room">Кількість кімнат</label>
+            <input type="text" placeholder="Введіть кількість кімнат " id="number_room">
         </div>
 
+        <!-- Поле для номера этажа -->
         <div id="floor-input">
-            <label for="user_floor">Поверх (можна обрати одразу декілька)</label>
+            <label for="user_floor">Поверх(можна обрати одразу декілька)</label>
             <select id="user_floor" multiple>
                 <script>
                     for (let i = 1; i <= 50; i++) {
@@ -216,6 +222,7 @@ id="user_description" rows="1"></textarea>
             </select>
         </div>
 
+        <!-- Поле для количества этажей в здании -->
         <div id="storeys-input">
             <label for="user_storeys">Кількість поверхів у будівлі</label>
             <select id="user_storeys">
@@ -226,103 +233,90 @@ id="user_description" rows="1"></textarea>
                 </script>
             </select>
         </div>
-
         <div id="error"></div>
         <button id="order" type="button">Опублікувати оголошення</button>
     </form>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        const tg = window.Telegram.WebApp;
-        const formElements = {
-            adress: document.getElementById("user_adress"),
-            price: document.getElementById("user_price"),
-            commission: document.getElementById("user_commission"),
-            name: document.getElementById("user_name"),
-            description: document.getElementById("user_description"),
-            area: document.getElementById("user_area"),
-            landArea: document.getElementById("land_area"),
-            numberRoom: document.getElementById("number_room"),
-            floor: document.getElementById("user_floor"),
-            storeys: document.getElementById("user_storeys"),
-            propertyType: document.getElementById("property_type"),
-            errorDiv: document.getElementById("error"),
-            orderButton: document.getElementById("order")
-        };
+        let tg = window.Telegram.WebApp;
+        let form = document.getElementById("form");
+        let nameField = document.getElementById("user_name");
+        let areaField = document.getElementById("user_area");
+        let landAreaField = document.getElementById("land_area");
+        let numberRoomField = document.getElementById("number_room");
+        let priceField = document.getElementById("user_price");
+        let commissionField = document.getElementById("user_commission");
+        let floorField = document.getElementById("user_floor");
+        let storeysField = document.getElementById("user_storeys");
+        let propertyType = document.getElementById("property_type");
+        let order = document.getElementById("order");
 
-        const toggleFieldVisibility = () => {
-            const { propertyType } = formElements;
-            const fields = {
-                area: document.getElementById("area-input"),
-                landArea: document.getElementById("land_area-input"),
-                numberRoom: document.getElementById("number_room-input"),
-                floor: document.getElementById("floor-input"),
-                storeys: document.getElementById("storeys-input")
-            };
+        // Проверяем, есть ли сохраненное имя в localStorage и устанавливаем его в поле
+        if (localStorage.getItem("savedName")) {
+            nameField.value = localStorage.getItem("savedName");
+        }
 
-            fields.area.style.display = propertyType.value === "_земельну_ділянку" ? "none" : "block";
-            fields.landArea.style.display = propertyType.value === "_земельну_ділянку" ? "block" : "none";
-            fields.numberRoom.style.display = ["_магазин_салон", "_земельну_ділянку"].includes(propertyType.value) ? "none" : "block";
-            fields.floor.style.display = propertyType.value === "_будинок" ? "block" : "none";
-            fields.storeys.style.display = ["_земельну_ділянку", "_точку_на_базарі", "_АЗС", "_фермерське_господарство", "_гараж_паркувальне_місце", "_МАФ_кіоск"].includes(propertyType.value) ? "none" : "block";
-        };
+        // Сохраняем имя в localStorage при изменении поля
+        nameField.addEventListener("input", function() {
+            localStorage.setItem("savedName", nameField.value);
+        });
 
-        const validateInput = (input, condition) => {
-            if (!condition) {
-                input.classList.add('error');
-                return false;
-            }
-            input.classList.remove('error');
-            return true;
-        };
+        tg.expand();
 
-        const validateForm = () => {
-            const { adress, price, commission, name, description, area, landArea, numberRoom } = formElements;
-            const validations = [
-                validateInput(adress, adress.value.length >= 3),
-                validateInput(price ```javascript
-, !isNaN(price.value) && Number(price.value) > 0),
-                validateInput(commission, !isNaN(commission.value) && Number.isInteger(Number(commission.value)) && Number(commission.value) >= 0 && Number(commission.value) <= 200),
-                validateInput(name, name.value.length >= 2),
-                validateInput(description, description.value.length >= 20),
-                validateInput(area, (formElements.propertyType.value !== "_земельну_ділянку" && !isNaN(area.value) && Number(area.value) > 0) || formElements.propertyType.value === "_земельну_ділянку"),
-                validateInput(landArea, (formElements.propertyType.value === "_земельну_ділянку" && !isNaN(landArea.value) && Number(landArea.value) > 0) || (formElements.propertyType.value !== "_земельну_ділянку" && landArea.value === "")),
-                validateInput(numberRoom, (formElements.propertyType.value !== "_земельну_ділянку" && formElements.propertyType.value !== "_магазин_салон" && !isNaN(numberRoom.value) && Number(numberRoom.value) > 0) || ["_магазин_салон", "_земельну_ділянку"].includes(formElements.propertyType.value))
-            ];
-            return validations.every(Boolean);
-        };
+        // Добавляем обработчик событий на форму
+        form.addEventListener("input", function(event) {
+            const target = event.target;
 
-        const handleSubmit = () => {
-            formElements.errorDiv.innerText = '';
-            if (!validateForm()) {
-                formElements.errorDiv.innerText = 'Виправте помилки у формі.';
-                return;
+            // Проверка ввода только чисел от 0 и выше
+            if (target === areaField || target === landAreaField || target === priceField || target === commissionField) {
+                validateNumberInput(event);
             }
 
-            const data = {
-                adress: formElements.adress.value,
-                price: formElements.price.value,
-                commission: formElements.commission.value,
-                name: formElements.name.value,
-                user_description: formElements.description.value,
-                transaction_type: document.getElementById("transaction_type").value,
-                property_type: formElements.propertyType.value,
-                currency_type: document.getElementById("currency_type").value,
-                district_type: document.getElementById("district_type").value,
-                area: formElements.area.value || "N/A",
-                land_area: formElements.landArea.value || "N/A",
-                number_room: formElements.numberRoom.value || "N/A",
-                floor: Array.from(formElements.floor.selectedOptions).map(option => option.value).join(", ") || "N/A",
-                storeys: formElements.storeys.value || "N/A"
-            };
+            // Проверка ввода только целых положительных чисел
+            if (target === numberRoomField) {
+                validateIntegerInput(event);
+            }
+
+            // Автоизменение высоты текстового поля
+            if (target === document.getElementById("user_description")) {
+                autoResizeTextarea(target);
+            }
+        });
+
+        // Обработчик клика на кнопку "Опублікувати оголошення"
+        order.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.getElementById("error").innerText = '';
+
+            // Ваш код для валидации и сбора данных...
 
             tg.sendData(JSON.stringify(data));
             tg.close();
-        };
+        });
 
-        formElements.orderButton.addEventListener("click", handleSubmit);
-        formElements.propertyType.addEventListener("change", toggleFieldVisibility);
-        toggleFieldVisibility(); // Initial call to set visibility based on default selection
+        // Функция для отображения или скрытия полей
+        function toggleFields() {
+            toggleAreaField();
+            toggleLandAreaField();
+            toggleNumberRoomField();
+            toggleFloorField();
+            toggleStoreysField();
+        }
+
+        // Добавляем обработчик изменения типа недвижимости
+        propertyType.addEventListener("change", toggleFields);
+
+        // Вызываем toggleFields при загрузке, чтобы сразу отображать или скрывать поля
+        toggleFields();
+
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto'; // Сначала сбрасываем высоту
+            textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем новую высоту
+        }
+
+        // Вызываем функцию при загрузке, чтобы установить правильную высоту
+        autoResizeTextarea(document.getElementById("user_description"));
     </script>
 </body>
 </html>
