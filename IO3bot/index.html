@@ -1,1 +1,601 @@
+<!doctype html>
+<head lang="ua">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VE Estate Dnipro</title>
+     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;700&display=swap');
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-bg-color);
+        }
+
+        #form {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 5% 5px;
+            font-size: 14px;
+            font-weight: 700; /* Сделали текст label более жирным */
+        }
+
+        input, select, textarea {
+            width: 90%;
+            outline: none;
+            margin: 0 5% 15px;
+            padding: 15px 10px;
+            font-size: 14px;
+            border: 2px solid silver;
+            border-radius: 5px;
+            display: block;
+            resize: none; /* Убираем возможность изменения размера для input и textarea */
+        }
+
+        textarea {
+            height: 50px; /* Устанавливаем одинаковую высоту для textarea */
+        }
+
+        input.error, select.error {
+            border-color: red;
+        }
+
+        select {
+            font-size: 14px;
+            height: 50px;
+        }
+
+        #select-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 5%;
+        }
+
+        .select-box {
+            width: 48%;
+        }
+
+        button {
+            border: 0;
+            border-radius: 5px;
+            margin-top: 20px;
+            height: 60px;
+            width: 200px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: var(--tg-theme-button-color);
+            background: var(--tg-theme-button-text-color);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            background: var(--tg-theme-secondary-bg-color);
+        }
+
+        #error {
+            color: red;
+            margin-top: 10px;
+            font-weight: 700; /* Сделали текст ошибок более жирным */
+        }
+
+        #area-input, #land_area-input, #number_room-input, #floor-input, #storeys-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <label for="user_adress">Адреса</label>
+        <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
+
+        <div id="price-currency-container" style="display: flex; justify-content: space-between; margin: 0 5%;">
+            <div style="width: 48%;">
+                <label for="user_price">Ціна</label>
+                <input type="text" placeholder="Введіть ціну" id="user_price" style="width: 100%;">
+            </div>
+            <div style="width: 48%;">
+                <label for="currency_type">Валюта</label>
+                <select id="currency_type" style="width: 100%;">
+                    <option value="гривень">Гривні</option>
+                    <option value="доларів">Долари США</option>
+                    <option value="євро">Євро</option>
+                </select>
+            </div>
+        </div>
+
+        <label for="user_commission">Комісія (якщо ви агент з нерухомості)</label>
+        <input type="text" placeholder="Вкажіть комісію у % від ціни або вкажіть 0" id="user_commission">
+
+        <label for="user_name">Ім'я</label>
+        <input type="text" placeholder="Ім'я" id="user_name">
+
+        <label for="user_description">Опис</label>
+        <textarea placeholder="Зробіть опис об'єкта (більше 20 символів)" id="user_description" rows="1" style="resize: none; height: 50px;"></textarea>
+
+        <!-- Контейнер для элементов select -->
+        <div id="select-container">
+            <div class="select-box">
+                <label for="transaction_type">Тип транзакції</label>
+                <select id="transaction_type">
+                    <option value="#Продам">Продам</option>
+                    <option value="#Здам">Здам</option>
+                </select>
+            </div>
+
+            <div class="select-box">
+                <label for="property_type">Тип нерухомості</label>
+                <select id="property_type">
+                <option value="_квартиру">квартира</option>
+                <option value="_будинок">будинок</option>
+                <option value="_земельну_ділянку">земельна ділянка</option>
+                <option value="_магазин_салон">магазин салон</option>
+                <option value="_ресторан_кафе">ресторан кафе</option>
+                <option value="_офіс">офіс</option>
+                <option value="_салон_краси">салон краси</option>
+                <option value="_медичну_установу">медична установа</option>
+                <option value="_склад">склад</option>
+                <option value="_пром_базу">пром база</option>
+                <option value="_виробництво">виробництво</option>
+                <option value="_базу_відпочинку">база відпочинку</option>
+                <option value="_готель">готель</option>
+                <option value="_МАФ_кіоск">МАФ кіоск</option>
+                <option value="_точку_на_базарі">точка на базарі</option>
+                <option value="_АЗС">АЗС</option>
+                <option value="_автомийку">автомийка</option>
+                <option value="_СТО">СТО</option>
+                <option value="_фермерське_господарство">фермерське господарство</option>
+                <option value="_гараж_паркувальне_місце">гараж паркувальне місце</option>
+                <option value="_приміщення_вільного_призначення">приміщення вільного призначення</option>
+                <option value="_окрему_нежитлову_будівлю">окрема нежитлова будівля</option>
+                <option value="_установу_освіти">установа освіти</option>
+                <option value="_спортивну_установу">спортивна установа</option>
+                </select>
+            </div>
+        </div>
+
+        <label for="district_type">Район</label>
+        <select id="district_type">
+                <option value="#Дніпро_Центральний">Дніпро Центральний</option>
+                <option value="#Дніпро_Шевченківський">Дніпро Шевченківський</option>
+                <option value="#Дніпро_Соборний">Дніпро Соборний</option>
+                <option value="#Дніпро_Нижньодніпровський_АНД">Дніпро Нижньодніпровський АНД</option>
+                <option value="#Дніпро_Індустріальний">Дніпро Індустріальний</option>
+                <option value="#Дніпро_Чечеловський">Дніпро Чечеловський</option>
+                <option value="#Дніпро_Новокодацький">Дніпро Новокодацький</option>
+                <option value="#Дніпро_Самарський">Дніпро Самарський</option>
+                <option value="#Дніпро_Дніпровський">Дніпро Дніпровський</option>
+                <option value="#Кам'янський">Кам'янський</option>
+                <option value="#Криворіжський">Криворіжський</option>
+                <option value="#Нікопольський">Нікопольський</option>
+                <option value="#Самар_Новомосковський">Самар Новомосковський</option>
+                <option value="#Матвіїв_Павлоградський">Матвіїв Павлоградський</option>
+                <option value="#Ріднопіль_Синельниківський">Ріднопіль Синельниківський</option>
+        </select>
+
+
+        <!-- Поле для общей площади помещений -->
+        <div id="area-input">
+            <label for="user_area">Загальна площа приміщень (м²)</label>
+            <input type="text" placeholder="Введіть загальну площу у м²" id="user_area">
+        </div>
+
+        <!-- Поле для площади земельного участка -->
+        <div id="land_area-input">
+            <label for="user_land_area">Площа земельної ділянки (м²)</label>
+            <input type="text" placeholder="Введіть площу ділянки у м² " id="land_area">
+        </div>
+
+        <!-- Поле для количества комнат -->
+        <div id="number_room-input">
+            <label for="user_number_room">Кількість кімнат</label>
+            <input type="text" placeholder="Введіть кількість кімнат " id="number_room">
+        </div>
+
+        <!-- Поле для номера этажа -->
+        <div id="floor-input">
+            <label for="user_floor">Поверх(можна обрати одразу декілька)</label>
+            <select id="user_floor" multiple>
+                <script>
+                    for (let i = 1; i <= 50; i++) {
+                        document.write(`<option value="${i}">${i}й</option>`);
+                    }
+                </script>
+                <option value="підвал">підвал</option>
+                <option value="цоколь">цоколь</option>
+            </select>
+        </div>
+
+        <!-- Поле для количества этажей в здании -->
+        <div id="storeys-input">
+            <label for="user_storeys">Кількість поверхів у будівлі</label>
+            <select id="user_storeys">
+                <script>
+                    for (let i = 1; i <= 50; i++) {
+                        document.write(`<option value="${i}">${i}</option>`);
+                    }
+                </script>
+            </select>
+        </div>
+
+        <div id="error"></div>
+        <button id="order" type="button">Опублікувати оголошення</button>
+    </form>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg = window.Telegram.WebApp;
+        let order = document.getElementById("order");
+        let areaInput = document.getElementById("area-input");
+        let areaField = document.getElementById("user_area");
+        let landAreaInput = document.getElementById("land_area-input");
+        let landAreaField = document.getElementById("land_area");
+        let numberRoomInput = document.getElementById("number_room-input");
+        let numberRoomField = document.getElementById("number_room");
+        let floorInput = document.getElementById("floor-input");
+        let floorField = document.getElementById("user_floor");
+        let storeysInput = document.getElementById("storeys-input");
+        let storeysField = document.getElementById("user_storeys");
+        let propertyType = document.getElementById("property_type");
+        let nameField = document.getElementById("user_name");
+
+        // Проверяем, есть ли сохраненное имя в localStorage и устанавливаем его в поле
+        if (localStorage.getItem("savedName")) {
+            nameField.value = localStorage.getItem("savedName");
+        }
+
+        // Сохраняем имя в localStorage при изменении поля
+        nameField.addEventListener("input", function() {
+            localStorage.setItem("savedName", nameField.value);
+        });
+
+        tg.expand();
+
+        // Функция для отображения или скрытия поля общей площади
+        function toggleAreaField() {
+            if (propertyType.value === "_земельну_ділянку") {
+                areaInput.style.display = "none";
+                areaField.value = ""; // Очистить значение площади, если поле скрыто
+            } else {
+                areaInput.style.display = "block";
+            }
+        }
+
+        // Функция для отображения или скрытия поля площади земельного участка
+        function toggleLandAreaField() {
+            if (propertyType.value === "_земельну_ділянку") {
+                landAreaInput.style.display = "block";
+                landAreaField.required = true;
+            } else if (propertyType.value === "_квартиру" ||
+                propertyType.value === "_гараж_паркувальне_місце" ||
+                propertyType.value === "_салон_краси" ||
+                propertyType.value === "_приміщення_вільного_призначення" ||
+                propertyType.value === "_МАФ_кіоск" ||
+                propertyType.value === "_точку_на_базарі") {
+                landAreaInput.style.display = "none";
+                landAreaField.value = "";
+                landAreaField.required = false;
+            } else {
+                landAreaInput.style.display = "block";
+                landAreaField.required = false;
+            }
+        }
+
+        // Функция для отображения или скрытия поля количество комнат
+        function toggleNumberRoomField() {
+            if (propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_магазин_салон" ||
+                propertyType.value === "_спортивну_установу" ||
+                propertyType.value === "_ресторан_кафе" ||
+                propertyType.value === "_склад" ||
+                propertyType.value === "_пром_базу" ||
+                propertyType.value === "_МАФ_кіоск" ||
+                propertyType.value === "_точку_на_базарі" ||
+                propertyType.value === "_АЗС" ||
+                propertyType.value === "_автомийку" ||
+                propertyType.value === "_СТО" ||
+                propertyType.value === "_фермерське_господарство" ||
+                propertyType.value === "_гараж_паркувальне_місце" ||
+                propertyType.value === "_виробництво") {
+                numberRoomInput.style.display = "none";
+                numberRoomField.value = ""; // Очистить значение площади, если поле скрыто
+            } else {
+                numberRoomInput.style.display = "block";
+            }
+        }
+
+        // Функция для отображения или скрытия поля этаж
+        function toggleFloorField() {
+            if (propertyType.value === "_будинок" ||
+                propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_окрему_нежитлову_будівлю" ||
+                propertyType.value === "_пром_базу" ||
+                propertyType.value === "_виробництво" ||
+                propertyType.value === "_базу_відпочинку" ||
+                propertyType.value === "_готель" ||
+                propertyType.value === "_МАФ_кіоск" ||
+                propertyType.value === "_точку_на_базарі" ||
+                propertyType .value === "_АЗС" ||
+                propertyType.value === "_автомийку" ||
+                propertyType.value === "_СТО" ||
+                propertyType.value === "_фермерське_господарство" ||
+                propertyType.value === "_гараж_паркувальне_місце") {
+                floorInput.style.display = "none";
+                floorField.value = ""; // Очистить значение этажа, если поле скрыто
+            } else {
+                floorInput.style .display = "block";
+            }
+        }
+
+        // Функция для отображения или скрытия поля количество этажей
+        function toggleStoreysField() {
+            if (propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_точку_на_базарі" ||
+                propertyType.value === "_АЗС" ||
+                propertyType.value === "_фермерське_господарство" ||
+                propertyType.value === "_гараж_паркувальне_місце" ||
+                propertyType.value === "_МАФ_кіоск") {
+                storeysInput.style.display = "none";
+                storeysField.value = ""; // Очистить значение этажа, если поле скрыто
+            } else {
+                storeysInput.style.display = "block";
+            }
+        }
+
+        // Функция для проверки ввода только чисел от 0 и выше
+        function validateNumberInput(event) {
+            let input = event.target;
+            let value = input.value;
+
+            if (isNaN(value) || Number(value) < 0) {
+                input.value = ""; // Очистить поле, если введено некорректное значение
+                input.classList.add('error'); // Добавить класс error для подсветки красным
+            } else {
+                input.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+        }
+
+        // Функция для проверки ввода только целых положительных чисел
+        function validateIntegerInput(event) {
+            let input = event.target;
+            let value = input.value;
+
+            // Проверяем, что значение — целое число и больше нуля
+            if (!/^\d+$/.test(value)) {
+                input.value = ""; // Очистить поле, если введено некорректное значение
+                input.classList.add('error'); // Добавить класс error для подсветки красным
+            } else {
+                input.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+        }
+
+        // Добавляем обработчик на изменение типа недвижимости
+        propertyType.addEventListener("change", function() {
+            toggleAreaField();
+            toggleLandAreaField();
+            toggleNumberRoomField();
+            toggleFloorField();
+            toggleStoreysField();
+        });
+
+        // Добавляем обработчики ввода для полей общей площади, площади земельного участка,
+        // количества комнат,
+        areaField.addEventListener("input", validateNumberInput);
+        landAreaField.addEventListener("input", validateNumberInput);
+        numberRoomField.addEventListener("input", validateIntegerInput);
+
+        // Добавляем обработчики ввода для полей "ціна" и "комісія"
+        let priceField = document.getElementById("user_price");
+        let commissionField = document.getElementById("user_commission");
+
+        priceField.addEventListener("input", validateNumberInput);
+        commissionField.addEventListener("input", validateNumberInput);
+
+        order.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.getElementById("error").innerText = '';
+
+            let adress = document.getElementById("user_adress").value;
+            let price = document.getElementById("user_price").value;
+            let commission = document.getElementById("user_commission").value;
+            let name = document.getElementById("user_name").value;
+            let description = document.getElementById("user_description").value;
+            let transactionType = document.getElementById("transaction_type").value;
+            let propertyTypeValue = document.getElementById("property_type").value;
+            let currencyType = document.getElementById("currency_type").value;
+            let districtType = document.getElementById("district_type").value;
+            let floorSelect = document.getElementById("user_floor");
+            let selectedFloors = Array.from(floorSelect.selectedOptions).map(option => option.value);
+            let floor = selectedFloors.join(", "); // Преобразуем массив выбранных этажей в строку
+            let storeys = document.getElementById("user_storeys").value;
+
+            // Проверка общей площади
+            let area = areaField.value;
+            if (propertyTypeValue !== "_земельну_ділянку" && (isNaN(area) || Number(area) <= 0)) {
+                document.getElementById("error").innerText = 'Помилка: загальна площа приміщень має бути додатнім числом';
+                areaField.classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                areaField.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+            // Проверка площади земельного участка
+            let land_area = landAreaField.value;
+            if (propertyTypeValue === "_земельну_ділянку") {
+                if (isNaN(land_area) || Number(land_area) <= 0) {
+                    document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
+                    landAreaField.classList.add('error');
+                    return;
+                }
+            } else if (propertyTypeValue !== "_квартиру" &&
+                propertyTypeValue !== "_гараж_паркувальне_місце" &&
+                propertyTypeValue !== "_МАФ_кіоск" &&
+                propertyTypeValue !== "_точку_на_базарі" &&
+                (isNaN(land_area) || Number(land_area) < 0)) {
+                document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом або залишена порожньою';
+                landAreaField.classList.add('error');
+                return;
+            }
+            landAreaField.classList.remove('error');
+
+            // Проверка количества комнат
+            let number_room = numberRoomField.value;
+            if (propertyTypeValue !== "_земельну_ділянку" &&
+                propertyTypeValue !== "_магазин_салон" &&
+                propertyTypeValue !== "_ресторан_кафе" &&
+                propertyTypeValue !== "_склад" &&
+                propertyTypeValue !== "_пром_базу" &&
+                propertyTypeValue !== "_МАФ_кіоск" &&
+                propertyTypeValue !== "_точку_на_базарі" &&
+                propertyTypeValue !== "_АЗС" &&
+                propertyTypeValue !== "_автомийку" &&
+                propertyTypeValue !== "_СТО" &&
+                propertyTypeValue !== "_фермерське_господарство" &&
+                propertyTypeValue !== "_гараж_паркувальне_місце" &&
+                propertyTypeValue !== "_виробництво" &&
+                (isNaN(number_room) || Number(number_room) <= 0)) {
+                document.getElementById("error").innerText = 'Помилка: кількість кімнат тільки додатнє ціле число';
+                numberRoomField.classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                numberRoomField.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+            if (adress.length < 3) {
+                document.getElementById("error").innerText = 'Помилка у адресі';
+                document.getElementById("user_adress").classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                document.getElementById("user_adress").classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+            // Проверка цены
+            if (isNaN(price) || Number(price) <= 0) {
+                document.getElementById("error").innerText = 'Помилка, ціна має бути додатнім числом';
+                priceField.classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                priceField.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+            // Проверка комиссии
+            let commissionValue = Number(commission);
+            if (isNaN(commissionValue) || !Number.isInteger(commissionValue) || commissionValue < 0 || commissionValue > 200) {
+                document.getElementById("error").innerText = 'Комісія повинна бути цілим числом від 0 до 200';
+                commissionField.classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                commissionField.classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+            if (commissionValue === 0) {
+                commission = "без комісії";
+            }
+
+            if (name.length < 2) {
+                document.getElementById("error").innerText = 'Помилка в імені';
+                document.getElementById("user_name").classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                document.getElementById("user_name").classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+            if (description.length < 20) {
+                document.getElementById("error").innerText = 'Опис має бути більше 20 символів';
+                document.getElementById("user_description").classList.add('error'); // Добавить класс error для подсветки красным
+                return;
+            } else {
+                document.getElementById("user_description").classList.remove('error'); // Удалить класс error, если значение корректное
+            }
+
+
+            // Проверка этажа, если поле отображается
+            if (floorInput.style.display !== "none") {
+                if (selectedFloors.length === 0) {
+                    document.getElementById("error").innerText = 'Помилка: потрібно вибрати хоча б один поверх';
+                    return;
+                }
+            }
+
+            // Проверка этажности
+            let floorNumber = Math.max(...selectedFloors.filter(f => !isNaN(f)).map(Number));
+            let selectedFloorCount = selectedFloors.length;
+
+            if (storeysInput.style.display !== "none") {
+                if (selectedFloorCount > 0 && selectedFloors.includes("підвал") === false && selectedFloors.includes("цоколь") === false) {
+                    if (storeys < floorNumber) {
+                        document.getElementById("error").innerText = 'Помилка: кількість поверхів у будівлі повинна бути більше або рівна поверху';
+                        storeysField.classList.add('error');
+                        return;
+                    } else {
+                        storeysField.classList.remove('error');
+                    }
+                }
+            }
+
+            // Если выбраны только "підвал" или "цоколь"
+            if (selectedFloorCount === 1 && (selectedFloors.includes("підвал") || selectedFloors.includes("цоколь"))) {
+                storeysField.classList.remove('error');
+            }
+
+
+            let data = {
+                adress: adress,
+                price: price,
+                commission: commission,
+                name: name,
+                user_description: description,
+                transaction_type: transactionType,
+                property_type: propertyTypeValue,
+                currency_type: currencyType,
+                district_type: districtType,
+                area: area || "N/A",
+                land_area: land_area || "N/A",
+                number_room: number_room || "N/A",
+                floor: floor || "N/A",
+                storeys: storeys || "N/A"
+            };
+
+            tg.sendData(JSON.stringify(data));
+            tg.close();
+        });
+
+        // Вызываем toggleAreaField и toggleLandAreaField() при загрузке, чтобы сразу отображать или скрывать поле
+        toggleAreaField();
+        toggleLandAreaField();
+        toggleNumberRoomField();
+        toggleFloorField();
+        toggleStoreysField();
+
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto'; // Сначала сбрасываем высоту
+            textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем новую высоту
+        }
+
+        // Добавляем обработчик события input для текстового поля
+        document.getElementById("user_description").addEventListener("input", function() {
+            autoResizeTextarea(this);
+        });
+
+        // Вызываем функцию при загрузке, чтобы установить правильную высоту
+        autoResizeTextarea(document.getElementById("user_description"));
+    </script>
+</body>
+</html>
