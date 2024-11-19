@@ -132,6 +132,7 @@
 
         <label for="user_description">Опис</label>
         <textarea placeholder="Зробіть опис об'єкта (не обов'язково)" id="user_description" rows="1" style="resize: none; height: 50px;"></textarea>
+        <div id="description-count" style="text-align: right; margin: 5px 5%; font-size: 12px; color: gray;">600 символів залишилось</div>
 
         <!-- Контейнер для элементов select -->
         <div id="select-container">
@@ -259,6 +260,34 @@
         let propertyType = document.getElementById("property_type");
         let nameField = document.getElementById("user_name");
         let phoneField = document.getElementById("user_phone");
+        let maxDescriptionLength = 600;
+        let descriptionField = document.getElementById("user_description");
+        let descriptionCount = document.getElementById("description-count");
+        let errorMessage = document.getElementById("error");
+        let orderButton = document.getElementById("order");
+
+        descriptionField.addEventListener("input", function() {
+            let currentLength = this.value.length;
+
+            if (currentLength > maxDescriptionLength) {
+                this.classList.add('error');
+                errorMessage.innerText = 'Помилка! Опис має бути не більше 600 символів';
+                orderButton.disabled = true;
+            } else {
+                this.classList.remove('error');
+                errorMessage.innerText = '';
+                orderButton.disabled = false;
+            }
+
+            if (currentLength > maxDescriptionLength) {
+                this.value = this.value.substring(0, maxDescriptionLength);
+            }
+
+            descriptionCount.innerText = `${maxDescriptionLength - this.value.length} символів залишилось`;
+        });
+
+        descriptionCount.innerText = `${maxDescriptionLength} символів залишилось`;
+
 
         // Проверяем, есть ли сохраненное имя в localStorage и устанавливаем его в поле
         if (localStorage.getItem("savedName")) {
