@@ -263,21 +263,35 @@
         let maxDescriptionLength = 600;
         let descriptionField = document.getElementById("user_description");
         let descriptionCount = document.getElementById("description-count");
+        let errorMessage = document.getElementById("error");
+        let orderButton = document.getElementById("order");
 
-        descriptionField.addEventListener("input", function() {
-            let currentLength = this.value.length;
-
-            // Ограничиваем ввод до 600 символов
-            if (currentLength > maxDescriptionLength) {
-                this.value = this.value.substring(0, maxDescriptionLength);
-            }
-
-            // Обновляем отображение оставшихся символов
-            descriptionCount.innerText = `${maxDescriptionLength - this.value.length} символів залишилось`;
-        });
-
-        // Инициализируем отображение количества символов при загрузке
-        descriptionCount.innerText = `${maxDescriptionLength} символів залишилось`;
+    // Обработчик ввода для поля описания
+    descriptionField.addEventListener("input", function() {
+        let currentLength = this.value.length;
+    
+        // Ограничиваем ввод до 600 символов
+        if (currentLength > maxDescriptionLength) {
+            this.value = this.value.substring(0, maxDescriptionLength);
+        }
+    
+        // Обновляем отображение оставшихся символов
+        descriptionCount.innerText = `${maxDescriptionLength - this.value.length} символів залишилось`;
+    
+        // Проверяем длину описания
+        if (this.value.length > maxDescriptionLength) {
+            this.classList.add('error'); // Добавляем класс error для подсветки красным
+            errorMessage.innerText = 'Помилка! Опис має бути не більше 600 символів';
+            orderButton.disabled = true; // Отключаем кнопку
+        } else {
+            this.classList.remove('error'); // Удаляем класс error, если значение корректное
+            errorMessage.innerText = ''; // Очищаем сообщение об ошибке
+            orderButton.disabled = false; // Включаем кнопку
+        }
+    });
+    
+    // Инициализируем отображение количества символов при загрузке
+    descriptionCount.innerText = `${maxDescriptionLength} символів залишилось`;
 
 
         // Проверяем, есть ли сохраненное имя в localStorage и устанавливаем его в поле
