@@ -260,7 +260,7 @@
         let propertyType = document.getElementById("property_type");
         let nameField = document.getElementById("user_name");
         let phoneField = document.getElementById("user_phone");
-        let maxDescriptionLength = 1001;
+        let maxDescriptionLength = 901;
         let descriptionField = document.getElementById("user_description");
         let descriptionCount = document.getElementById("description-count");
         let errorMessage = document.getElementById("error");
@@ -271,7 +271,7 @@
 
             if (currentLength > maxDescriptionLength) {
                 this.classList.add('error');
-                errorMessage.innerText = 'Помилка! Опис має бути не більше 1001 символа';
+                errorMessage.innerText = 'Помилка! Опис має бути не більше 901 символа';
                 orderButton.disabled = true;
             } else {
                 this.classList.remove('error');
