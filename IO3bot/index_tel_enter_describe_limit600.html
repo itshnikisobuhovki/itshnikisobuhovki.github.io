@@ -4,7 +4,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>VE Estate Dnipro</title>
+    <title>Estate Ukraine</title>
      <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;700&display=swap');
 
@@ -103,6 +103,12 @@
 </head>
 <body>
     <form id="form">
+        <label for="region">Область</label>
+        <select id="region">
+            <option value="Київська область">Київська область</option>
+            <option value="Львівська область">Львівська область</option>
+        </select>
+
         <label for="user_adress">Адреса</label>
         <input type="text" placeholder="Введіть адресу починаючи з вулиці" id="user_adress">
 
@@ -247,6 +253,7 @@
     <script>
         let tg = window.Telegram.WebApp;
         let order = document.getElementById("order");
+        let regionField = document.getElementById("region");
         let areaInput = document.getElementById("area-input");
         let areaField = document.getElementById("user_area");
         let landAreaInput = document.getElementById("land_area-input");
@@ -265,6 +272,16 @@
         let descriptionCount = document.getElementById("description-count");
         let errorMessage = document.getElementById("error");
         let orderButton = document.getElementById("order");
+
+        // Проверяем, есть ли сохраненная область в localStorage и устанавливаем её в поле
+        if (localStorage.getItem("savedRegion")) {
+            regionField.value = localStorage.getItem("savedRegion");
+        }
+
+        // Сохраняем область в localStorage при изменении поля
+        regionField.addEventListener("change", function() {
+            localStorage.setItem("savedRegion", regionField.value);
+        });
 
         descriptionField.addEventListener("input", function() {
             let currentLength = this.value.length;
@@ -455,6 +472,7 @@
             event.preventDefault();
             document.getElementById("error").innerText = '';
 
+            let region = regionField.value;
             let adress = document.getElementById("user_adress").value;
             let price = document.getElementById("user_price").value;
             let commission = document.getElementById("user_commission").value;
@@ -504,7 +522,7 @@
             if (propertyTypeValue !== "_земельну_ділянку" &&
                 propertyTypeValue !== "_магазин_салон" &&
                 propertyTypeValue !== "_ресторан_кафе" &&
-                propertyTypeValue !== "_склад" &&
+                 propertyTypeValue !== "_склад" &&
                 propertyTypeValue !== "_пром_базу" &&
                 propertyTypeValue !== "_МАФ_кіоск" &&
                 propertyTypeValue !== "_точку_на_базарі" &&
@@ -600,6 +618,7 @@
 
 
             let data = {
+                region: region,
                 adress: adress,
                 price: price,
                 commission: commission,
