@@ -153,30 +153,31 @@
             <div class="select-box">
                 <label for="property_type">Тип нерухомості</label>
                 <select id="property_type">
-                <option value="_квартиру">квартира</option>
-                <option value="_будинок">будинок</option>
-                <option value="_земельну_ділянку">земельна ділянка</option>
-                <option value="_магазин_салон">магазин салон</option>
-                <option value="_ресторан_кафе">ресторан кафе</option>
-                <option value="_офіс">офіс</option>
-                <option value="_салон_краси">салон краси</option>
-                <option value="_медичну_установу">медична установа</option>
-                <option value="_склад">склад</option>
-                <option value="_пром_базу">пром база</option>
-                <option value="_виробництво">виробництво</option>
-                <option value="_базу_відпочинку">база відпочинку</option>
-                <option value="_готель">готель</option>
-                <option value="_МАФ_кіоск">МАФ кіоск</option>
-                <option value="_точку_на_базарі">точка на базарі</option>
-                <option value="_АЗС">АЗС</option>
-                <option value="_автомийку">автомийка</option>
-                <option value="_СТО">СТО</option>
-                <option value="_фермерське_господарство">фермерське господарство</option>
-                <option value="_гараж_паркувальне_місце">гараж паркувальне місце</option>
-                <option value="_приміщення_вільного_призначення">приміщення вільного призначення</option>
-                <option value="_окрему_нежитлову_будівлю">окрема нежитлова будівля</option>
-                <option value="_установу_освіти">установа освіти</option>
-                <option value="_спортивну_установу">спортивна установа</option>
+                   <option value="_квартиру">квартира</option>
+                    <option value="_будинок">будинок</option>
+                    <option value="_земельну_ділянку">земельна ділянка (житло/дача)</option>
+                    <option value="_земельну_ділянку_">земельна ділянка (бізнес)</option>
+                    <option value="_магазин_салон">магазин салон</option>
+                    <option value="_ресторан_кафе">ресторан кафе</option>
+                    <option value="_офіс">офіс</option>
+                    <option value="_салон_краси">салон краси</option>
+                    <option value="_медичну_установу">медична установа</option>
+                    <option value="_склад">склад</option>
+                    <option value="_пром_базу">пром база</option>
+                    <option value="_виробництво">виробництво</option>
+                    <option value="_базу_відпочинку">база відпочинку</option>
+                    <option value="_готель">готель</option>
+                    <option value="_МАФ_кіоск">МАФ кіоск</option>
+                    <option value="_точку_на_базарі">точка на базарі</option>
+                    <option value="_АЗС">АЗС</option>
+                    <option value="_автомийку">автомийка</option>
+                    <option value="_СТО">СТО</option>
+                    <option value="_фермерське_господарство">фермерське господарство</option>
+                    <option value="_гараж_паркувальне_місце">гараж паркувальне місце</option>
+                    <option value="_приміщення_вільного_призначення">приміщення вільного призначення</option>
+                    <option value="_окрему_нежитлову_будівлю">окрема нежитлова будівля</option>
+                    <option value="_установу_освіти">установа освіти</option>
+                    <option value="_спортивну_установу">спортивна установа</option>
                 </select>
             </div>
         </div>
@@ -330,7 +331,7 @@
 
         // Функция для отображения или скрытия поля общей площади
         function toggleAreaField() {
-            if (propertyType.value === "_земельну_ділянку") {
+            if (propertyType.value === "_земельну_ділянку" || propertyType.value === "_земельну_ділянку_") {
                 areaInput.style.display = "none";
                 areaField.value = ""; // Очистить значение площади, если поле скрыто
             } else {
@@ -340,7 +341,7 @@
 
         // Функция для отображения или скрытия поля площади земельного участка
         function toggleLandAreaField() {
-            if (propertyType.value === "_земельну_ділянку") {
+            if (propertyType.value === "_земельну_ділянку" || propertyType.value === "_земельну_ділянку_") {
                 landAreaInput.style.display = "block";
                 landAreaField.required = true;
             } else if (propertyType.value === "_квартиру" ||
@@ -361,6 +362,7 @@
         // Функция для отображения или скрытия поля количество комнат
         function toggleNumberRoomField() {
             if (propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_земельну_ділянку_" ||
                 propertyType.value === "_магазин_салон" ||
                 propertyType.value === "_спортивну_установу" ||
                 propertyType.value === "_ресторан_кафе" ||
@@ -385,6 +387,7 @@
         function toggleFloorField() {
             if (propertyType.value === "_будинок" ||
                 propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_земельну_ділянку_" ||
                 propertyType.value === "_окрему_нежитлову_будівлю" ||
                 propertyType.value === "_пром_базу" ||
                 propertyType.value === "_виробництво" ||
@@ -407,6 +410,7 @@
         // Функция для отображения или скрытия поля количество этажей
         function toggleStoreysField() {
             if (propertyType.value === "_земельну_ділянку" ||
+                propertyType.value === "_земельну_ділянку_" ||
                 propertyType.value === "_точку_на_базарі" ||
                 propertyType.value === "_АЗС" ||
                 propertyType.value === "_фермерське_господарство" ||
@@ -490,7 +494,7 @@
 
             // Проверка общей площади
             let area = areaField.value;
-            if (propertyTypeValue !== "_земельну_ділянку" && (isNaN(area) || Number(area) <= 0)) {
+            if ((propertyTypeValue !== "_земельну_ділянку" && propertyTypeValue !== "_земельну_ділянку_") && (isNaN(area) || Number(area) <= 0)) {
                 document.getElementById("error").innerText = 'Помилка: загальна площа приміщень має бути додатнім числом';
                 areaField.classList.add('error'); // Добавить класс error для подсветки красным
                 return;
@@ -500,7 +504,7 @@
 
             // Проверка площади земельного участка
             let land_area = landAreaField.value;
-            if (propertyTypeValue === "_земельну_ділянку") {
+            if (propertyTypeValue === "_земельну_ділянку" || propertyTypeValue === "_земельну_ділянку_") {
                 if (isNaN(land_area) || Number(land_area) <= 0) {
                     document.getElementById("error").innerText = 'Помилка: площа земельної ділянки має бути додатнім числом';
                     landAreaField.classList.add('error');
