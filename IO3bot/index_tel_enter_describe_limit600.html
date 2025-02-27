@@ -514,6 +514,7 @@
                 propertyTypeValue !== "_фермерське_господарство" &&
                 propertyTypeValue !== "_гараж_паркувальне_місце" &&
                 propertyTypeValue !== "_виробництво" &&
+                propertyTypeValue !== "_спортивну_установу" &&
                 (isNaN(number_room) || Number(number_room) <= 0)) {
                 document.getElementById("error").innerText = 'Помилка: кількість кімнат тільки додатнє ціле число';
                 numberRoomField.classList.add('error'); // Добавить класс error для подсветки красным
